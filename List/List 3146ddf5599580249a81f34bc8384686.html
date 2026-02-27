@@ -1,0 +1,899 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>List</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+/* Override strong tags inside headings to maintain consistent weight */
+h1 strong,
+h2 strong,
+h3 strong {
+	font-weight: 600;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 10px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.collection-content td {
+	white-space: pre-wrap;
+	word-break: break-word;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+	margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.callout img.notion-static-icon {
+	width: 1em;
+	height: 1em;
+}
+
+.callout p {
+	margin: 0;
+}
+
+.callout h1,
+.callout h2,
+.callout h3 {
+	margin: 0 0 0.6rem;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+blockquote.quote-large {
+	font-size: 1.25em;
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.highlight-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.highlight-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.highlight-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.highlight-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.highlight-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.highlight-default_background {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray_background {
+	background: rgba(42, 28, 0, 0.07);
+}
+.highlight-brown_background {
+	background: rgba(139, 46, 0, 0.086);
+}
+.highlight-orange_background {
+	background: rgba(224, 101, 1, 0.129);
+}
+.highlight-yellow_background {
+	background: rgba(211, 168, 0, 0.137);
+}
+.highlight-teal_background {
+	background: rgba(0, 100, 45, 0.09);
+}
+.highlight-blue_background {
+	background: rgba(0, 124, 215, 0.094);
+}
+.highlight-purple_background {
+	background: rgba(102, 0, 178, 0.078);
+}
+.highlight-pink_background {
+	background: rgba(197, 0, 93, 0.086);
+}
+.highlight-red_background {
+	background: rgba(223, 22, 0, 0.094);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.block-color-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.block-color-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.block-color-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.block-color-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.block-color-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(240, 239, 237, 1);
+}
+.block-color-brown_background {
+	background: rgba(245, 237, 233, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 235, 222, 1);
+}
+.block-color-yellow_background {
+	background: rgba(249, 243, 220, 1);
+}
+.block-color-teal_background {
+	background: rgba(232, 241, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(229, 242, 252, 1);
+}
+.block-color-purple_background {
+	background: rgba(243, 235, 249, 1);
+}
+.block-color-pink_background {
+	background: rgba(250, 233, 241, 1);
+}
+.block-color-red_background {
+	background: rgba(252, 233, 231, 1);
+}
+.select-value-color-default { background-color: rgba(42, 28, 0, 0.07); }
+.select-value-color-gray { background-color: rgba(28, 19, 1, 0.11); }
+.select-value-color-brown { background-color: rgba(127, 51, 0, 0.156); }
+.select-value-color-orange { background-color: rgba(196, 88, 0, 0.203); }
+.select-value-color-yellow { background-color: rgba(209, 156, 0, 0.282); }
+.select-value-color-green { background-color: rgba(0, 96, 38, 0.156); }
+.select-value-color-blue { background-color: rgba(0, 118, 217, 0.203); }
+.select-value-color-purple { background-color: rgba(92, 0, 163, 0.141); }
+.select-value-color-pink { background-color: rgba(183, 0, 78, 0.152); }
+.select-value-color-red { background-color: rgba(206, 24, 0, 0.164); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="3146ddf5-5995-8024-9a81-f34bc8384686" class="page sans"><header><h1 class="page-title" dir="auto">List</h1><p class="page-description" dir="auto"></p></header><div class="page-body"><div style="display:contents" dir="auto"><p id="3146ddf5-5995-8030-a7c6-d5a30efb351a" class="">
+</p></div><div style="display:contents" dir="auto"><h3 id="3146ddf5-5995-80b8-9d14-fd397083f124" class="">1. Singly Linked List</h3></div><div style="display:contents" dir="auto"><p id="3146ddf5-5995-8089-8d55-ef99f5795847" class=""><strong>Concept</strong></p></div><div style="display:contents" dir="auto"><p id="3146ddf5-5995-807e-939e-fd6c6cc172b3" class="">Each node contains <strong>data</strong> + <strong>next</strong> pointer (points to next node).</p></div><div style="display:contents" dir="auto"><p id="3146ddf5-5995-80a9-9655-c8de7fe3c15f" class="">You can only traverse <strong>forward</strong> (no backward movement).</p></div><div style="display:contents" dir="auto"><p id="3146ddf5-5995-8097-898d-dd010e9740d6" class="">Last node’s next = <strong>None</strong> (or null).</p></div><div style="display:contents" dir="auto"><p id="3146ddf5-5995-80be-a336-e3ae9e525568" class=""><strong>Advantages</strong></p></div><div style="display:contents" dir="auto"><ul id="3146ddf5-5995-80ec-af17-f739c6d944bf" class="bulleted-list"><li style="list-style-type:disc">Simple implementation</li></ul></div><div style="display:contents" dir="auto"><ul id="3146ddf5-5995-80c0-b195-cf99ad3fccd2" class="bulleted-list"><li style="list-style-type:disc">Memory efficient (only one pointer per node)</li></ul></div><div style="display:contents" dir="auto"><ul id="3146ddf5-5995-8072-9782-edf81507af7a" class="bulleted-list"><li style="list-style-type:disc">Good for sequential access, stack/queue implementation</li></ul></div><div style="display:contents" dir="auto"><p id="3146ddf5-5995-80f4-9e50-d3b64caa18eb" class=""><strong>Disadvantages</strong></p></div><div style="display:contents" dir="auto"><ul id="3146ddf5-5995-8030-b18b-fcdc8e905523" class="bulleted-list"><li style="list-style-type:disc">No backward traversal</li></ul></div><div style="display:contents" dir="auto"><ul id="3146ddf5-5995-80b8-9800-e0656ca274f6" class="bulleted-list"><li style="list-style-type:disc">Deleting a node requires previous node’s reference (O(n) in worst case without prev pointer)</li></ul></div><div style="display:contents" dir="auto"><p id="3146ddf5-5995-80b1-a8c5-efcb61080fa6" class=""><strong>Basic Node Structure &amp; Operations</strong></p></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="3146ddf5-5995-809e-98b7-d56cfee3c915" class="code code-wrap"><code class="language-Python" style="white-space:pre-wrap;word-break:break-all">class Node:
+    def __init__(self, data):
+        self.data = data
+        self.next = None
+
+class SinglyLinkedList:
+    def __init__(self):
+        self.head = None
+
+    def append(self, data):
+        new_node = Node(data)
+        if not self.head:
+            self.head = new_node
+            return
+
+        curr = self.head
+        while curr.next:
+            curr = curr.next
+        curr.next = new_node
+
+    def print_list(self):
+        curr = self.head
+        while curr:
+            print(curr.data, end=&quot; → &quot;)
+            curr = curr.next
+        print(&quot;None&quot;)
+
+# Example usage
+ll = SinglyLinkedList()
+ll.append(10)
+ll.append(20)
+ll.append(30)
+ll.append(40)
+ll.print_list()          # Output: 10 → 20 → 30 → 40 → None</code></pre></div><div style="display:contents" dir="auto"><p id="3146ddf5-5995-805c-8dd5-d4b5336ac45b" class=""><strong>Visual Representation</strong></p></div><div style="display:contents" dir="auto"><p id="3146ddf5-5995-8065-8190-cee64fe49312" class="">(good classic structure)</p></div><div style="display:contents" dir="auto"><div id="3146ddf5-5995-8047-beac-c07c84dc7d70" class="column-list"><div style="display:contents" dir="auto"><div id="3146ddf5-5995-8016-bea5-ff87707ec312" style="width:50%" class="column"><div style="display:contents" dir="ltr"><figure id="3146ddf5-5995-8018-82cb-cc8fee92c189" class="image" style="text-align:left"><a href="image.png"><img style="width:384px" src="image.png"/></a></figure></div></div></div><div style="display:contents" dir="auto"><div id="3146ddf5-5995-800f-a385-dd9a3c185dac" style="width:50%" class="column"><div style="display:contents" dir="ltr"><figure id="3146ddf5-5995-8058-9b7c-e94b8023cd7d" class="image"><a href="image%201.png"><img style="width:432px" src="image%201.png"/></a></figure></div></div></div></div></div><div style="display:contents" dir="ltr"><figure id="3146ddf5-5995-80ca-abce-d8f72e11540e" class="image"><a href="image%202.png"><img style="width:480px" src="image%202.png"/></a></figure></div><div style="display:contents" dir="auto"><h3 id="3146ddf5-5995-80d4-8444-e88bf9bc4188" class="">2. Doubly Linked List</h3></div><div style="display:contents" dir="auto"><p id="3146ddf5-5995-8070-80a9-cb63b67e0cf9" class=""><strong>Concept</strong></p></div><div style="display:contents" dir="auto"><p id="3146ddf5-5995-8050-bf82-c6e64271f11d" class="">Each node has <strong>data</strong> + <strong>next</strong> pointer + <strong>prev</strong> pointer.</p></div><div style="display:contents" dir="auto"><p id="3146ddf5-5995-80b9-8d81-fde26d6deb24" class="">Can traverse <strong>forward</strong> and <strong>backward</strong>.</p></div><div style="display:contents" dir="auto"><p id="3146ddf5-5995-805d-bcfa-c896459f06fd" class=""><strong>Advantages</strong></p></div><div style="display:contents" dir="auto"><ul id="3146ddf5-5995-8089-9fee-c446810f8c2e" class="bulleted-list"><li style="list-style-type:disc">Easy deletion (if you have the node, you can remove it in O(1) using prev &amp; next)</li></ul></div><div style="display:contents" dir="auto"><ul id="3146ddf5-5995-80a0-8d4a-cc813aeff9d8" class="bulleted-list"><li style="list-style-type:disc">Bidirectional traversal</li></ul></div><div style="display:contents" dir="auto"><ul id="3146ddf5-5995-8051-b4c3-d1d9d2953a5c" class="bulleted-list"><li style="list-style-type:disc">Useful in browser history, LRU cache, etc.</li></ul></div><div style="display:contents" dir="auto"><p id="3146ddf5-5995-8085-a105-c6d978dc3809" class=""><strong>Disadvantages</strong></p></div><div style="display:contents" dir="auto"><ul id="3146ddf5-5995-8098-a321-d0a74110b95b" class="bulleted-list"><li style="list-style-type:disc">Uses more memory (two pointers per node)</li></ul></div><div style="display:contents" dir="auto"><ul id="3146ddf5-5995-800f-88fa-c691c02aacb9" class="bulleted-list"><li style="list-style-type:disc">More complex insertion/deletion logic</li></ul></div><div style="display:contents" dir="auto"><p id="3146ddf5-5995-8045-94ef-fb1b43c2bf11" class=""><strong>Basic Implementation (Python)</strong></p></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="3146ddf5-5995-801b-98d9-cd8483a4f4be" class="code code-wrap"><code class="language-Python" style="white-space:pre-wrap;word-break:break-all">class DoublyNode:
+    def __init__(self, data):
+        self.data = data
+        self.next = None
+        self.prev = None
+
+class DoublyLinkedList:
+    def __init__(self):
+        self.head = None
+
+    def append(self, data):
+        new_node = DoublyNode(data)
+        if not self.head:
+            self.head = new_node
+            return
+
+        curr = self.head
+        while curr.next:
+            curr = curr.next
+
+        curr.next = new_node
+        new_node.prev = curr
+
+    def print_forward(self):
+        curr = self.head
+        while curr:
+            print(curr.data, end=&quot; ↔ &quot;)
+            curr = curr.next
+        print(&quot;None&quot;)
+
+    def print_backward(self):
+        if not self.head:
+            return
+        curr = self.head
+        while curr.next:
+            curr = curr.next
+        # Now curr is tail
+        while curr:
+            print(curr.data, end=&quot; ↔ &quot;)
+            curr = curr.prev
+        print(&quot;None&quot;)
+
+# Example
+dll = DoublyLinkedList()
+dll.append(1)
+dll.append(2)
+dll.append(3)
+dll.print_forward()     # 1 ↔ 2 ↔ 3 ↔ None
+dll.print_backward()    # 3 ↔ 2 ↔ 1 ↔ None</code></pre></div><div style="display:contents" dir="auto"><p id="3146ddf5-5995-803e-8507-f8412a53a649" class=""><strong>Visual Representation</strong></p></div><div style="display:contents" dir="auto"><div id="3146ddf5-5995-80e6-b650-d5296f9b1497" class="column-list"><div style="display:contents" dir="auto"><div id="3146ddf5-5995-807c-84a9-ed772709f8c4" style="width:50%" class="column"><div style="display:contents" dir="ltr"><figure id="3146ddf5-5995-80c9-b5c2-d9558f040942" class="image" style="text-align:left"><a href="image%203.png"><img style="width:432px" src="image%203.png"/></a></figure></div></div></div><div style="display:contents" dir="auto"><div id="3146ddf5-5995-8061-b6d7-dfd1df834e33" style="width:49.99999999999999%" class="column"><div style="display:contents" dir="ltr"><figure id="3146ddf5-5995-80d9-b9d3-d2576ef06928" class="image"><a href="image%204.png"><img style="width:480px" src="image%204.png"/></a></figure></div></div></div></div></div><div style="display:contents" dir="auto"><h3 id="3146ddf5-5995-80d4-b1e5-cb8382d9e6bb" class="">3. Fast-Slow Pointers (Tortoise &amp; Hare Technique)</h3></div><div style="display:contents" dir="auto"><p id="3146ddf5-5995-802c-81e5-c7badca866b8" class=""><strong>Concept</strong></p></div><div style="display:contents" dir="auto"><p id="3146ddf5-5995-80d6-b0a3-c75c78c96c28" class="">Two pointers moving at different speeds in the same linked list:</p></div><div style="display:contents" dir="auto"><ul id="3146ddf5-5995-8014-b29f-f276d67102d3" class="bulleted-list"><li style="list-style-type:disc"><strong>Slow</strong> (tortoise) → moves 1 step</li></ul></div><div style="display:contents" dir="auto"><ul id="3146ddf5-5995-8039-b424-cd27869106be" class="bulleted-list"><li style="list-style-type:disc"><strong>Fast</strong> (hare) → moves 2 steps</li></ul></div><div style="display:contents" dir="auto"><p id="3146ddf5-5995-8064-b017-d7dbee50332e" class=""><strong>Main Uses</strong></p></div><div style="display:contents" dir="auto"><ol type="1" id="3146ddf5-5995-809c-8227-dd6ee6e85284" class="numbered-list" start="1"><li><strong>Find middle of linked list</strong> (very common in interviews)</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="3146ddf5-5995-806e-ad6b-d5e14ebce7f4" class="numbered-list" start="2"><li><strong>Detect cycle/loop</strong> in linked list → Floyd’s Cycle Detection Algorithm (O(n) time, O(1) space)</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="3146ddf5-5995-80bd-9c3d-d7313d6a15ec" class="numbered-list" start="3"><li>Find starting point of cycle (after detection)</li></ol></div><div style="display:contents" dir="auto"><p id="3146ddf5-5995-8067-9023-d0e781d81b20" class=""><strong>Example 1: Find Middle (odd &amp; even length)</strong></p></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="3146ddf5-5995-8036-9a93-fa10d1ef685c" class="code code-wrap"><code class="language-Python" style="white-space:pre-wrap;word-break:break-all">def find_middle(head):
+    if not head:
+        return None
+    slow = head
+    fast = head
+
+    while fast and fast.next:     # fast can take 2 steps
+        slow = slow.next
+        fast = fast.next.next
+
+    return slow.data if slow else None
+
+# 1 → 2 → 3 → 4 → 5    → middle = 3
+# 1 → 2 → 3 → 4        → middle = 3 (or 2 depending on definition)</code></pre></div><div style="display:contents" dir="auto"><p id="3146ddf5-5995-8078-98a3-e1cf35a7ad86" class=""><strong>Visual</strong></p></div><div style="display:contents" dir="ltr"><figure id="3146ddf5-5995-80d5-b69a-d755e0944b06" class="image" style="text-align:left"><a href="image%205.png"><img style="width:480px" src="image%205.png"/></a></figure></div><div style="display:contents" dir="auto"><p id="3146ddf5-5995-804f-8ca5-cb745f1755bd" class=""><strong>Example 2: Detect Cycle (Floyd’s Algorithm)</strong></p></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="3146ddf5-5995-8012-b7e1-d99d94b2d064" class="code code-wrap"><code class="language-Python" style="white-space:pre-wrap;word-break:break-all">def has_cycle(head):
+    if not head or not head.next:
+        return False
+
+    slow = head
+    fast = head
+
+    while fast and fast.next:
+        slow = slow.next              # +1
+        fast = fast.next.next         # +2
+
+        if slow == fast:
+            return True               # cycle exists
+
+    return False</code></pre></div><div style="display:contents" dir="auto"><p id="3146ddf5-5995-8097-8fd3-e2740b2d906a" class=""><strong>How it works (when cycle exists)</strong></p></div><div style="display:contents" dir="auto"><p id="3146ddf5-5995-8052-a543-d56a2ce341a2" class="">Fast catches up to slow inside the loop (mathematically proven).</p></div><div style="display:contents" dir="auto"><p id="3146ddf5-5995-8048-9dcc-f0c7d712bc53" class=""><strong>Visual – Cycle Detection</strong></p></div><div style="display:contents" dir="auto"><div id="3146ddf5-5995-8008-a2be-d3bb12dfd380" class="column-list"><div style="display:contents" dir="auto"><div id="3146ddf5-5995-80c2-88f5-ccc32a865853" style="width:50%" class="column"><div style="display:contents" dir="ltr"><figure id="3146ddf5-5995-80c9-9781-cd7b59815170" class="image" style="text-align:left"><a href="image%206.png"><img style="width:384px" src="image%206.png"/></a></figure></div></div></div><div style="display:contents" dir="auto"><div id="3146ddf5-5995-8028-9d43-d1ee5cb3bcfd" style="width:50%" class="column"><div style="display:contents" dir="ltr"><figure id="3146ddf5-5995-8078-87f7-ce57c6fca508" class="image" style="text-align:left"><a href="image%207.png"><img style="width:384px" src="image%207.png"/></a></figure></div></div></div></div></div><div style="display:contents" dir="ltr"><figure id="3146ddf5-5995-8036-9aeb-e4fd8e098355" class="image"><a href="image%208.png"><img style="width:432px" src="image%208.png"/></a></figure></div><div style="display:contents" dir="auto"><p id="3146ddf5-5995-80c0-9049-e37b4bc5fb58" class=""><strong>Quick Summary Table</strong></p></div><div style="display:contents" dir="ltr"><table id="3146ddf5-5995-8028-8ebd-ce07ec7b29fb" class="simple-table"><thead class="simple-table-header"><div style="display:contents" dir="ltr"><tr id="3146ddf5-5995-8066-839a-cc5ba1a17d03"><th id="vx[O" class="simple-table-header-color simple-table-header">Feature</th><th id="Kfnn" class="simple-table-header-color simple-table-header">Singly Linked List</th><th id="DRoN" class="simple-table-header-color simple-table-header">Doubly Linked List</th><th id="\@cg" class="simple-table-header-color simple-table-header">Fast-Slow Pointers</th></tr></div></thead><tbody><div style="display:contents" dir="ltr"><tr id="3146ddf5-5995-8014-892f-d643b04e9af7"><td id="vx[O" class="">Node pointers</td><td id="Kfnn" class="">1 (next)</td><td id="DRoN" class="">2 (next + prev)</td><td id="\@cg" class="">— (technique, not structure)</td></tr></div><div style="display:contents" dir="ltr"><tr id="3146ddf5-5995-80e1-9e7a-ebc4dfe06438"><td id="vx[O" class="">Traversal</td><td id="Kfnn" class="">Forward only</td><td id="DRoN" class="">Forward + Backward</td><td id="\@cg" class="">—</td></tr></div><div style="display:contents" dir="ltr"><tr id="3146ddf5-5995-80ce-952e-e4adf5abea09"><td id="vx[O" class="">Memory per node</td><td id="Kfnn" class="">Less</td><td id="DRoN" class="">More</td><td id="\@cg" class="">—</td></tr></div><div style="display:contents" dir="ltr"><tr id="3146ddf5-5995-8089-87b2-e2ec5e5e7b4b"><td id="vx[O" class="">Cycle detection</td><td id="Kfnn" class="">Hard (needs extra space)</td><td id="DRoN" class="">Hard</td><td id="\@cg" class="">Very efficient (O(1) space)</td></tr></div><div style="display:contents" dir="ltr"><tr id="3146ddf5-5995-8018-8e70-e1bff70f2d1a"><td id="vx[O" class="">Find middle</td><td id="Kfnn" class="">O(n) with counting</td><td id="DRoN" class="">O(n) with counting</td><td id="\@cg" class="">O(n) – best way</td></tr></div><div style="display:contents" dir="ltr"><tr id="3146ddf5-5995-8097-8b5f-e9ce39d8110b"><td id="vx[O" class="">Common interview use</td><td id="Kfnn" class="">Basic operations</td><td id="DRoN" class="">Deque / LRU Cache</td><td id="\@cg" class="">Cycle, middle, palindrome</td></tr></div></tbody></table></div><div style="display:contents" dir="auto"><p id="3146ddf5-5995-80bc-98eb-e2cba8ff0680" class="">
+</p></div><div style="display:contents" dir="auto"><p id="3146ddf5-5995-8004-ada1-eb2ee8c1cdd8" class="">
+</p></div><div style="display:contents" dir="auto"><h3 id="3146ddf5-5995-8080-ae07-d657f6e1bfe3" class="">1. Cycle Detection (Floyd&#x27;s Tortoise and Hare Algorithm)</h3></div><div style="display:contents" dir="auto"><p id="3146ddf5-5995-801b-a2d3-e6be31265185" class="">Detects if a singly linked list has a cycle (loop) efficiently in <strong>O(n)</strong> time and <strong>O(1)</strong> space.</p></div><div style="display:contents" dir="auto"><p id="3146ddf5-5995-8089-aa73-ce4ed15c0aa7" class=""><strong>Idea</strong> — Use two pointers: slow (tortoise) moves 1 step, fast (hare) moves 2 steps. If they meet → cycle exists.</p></div><div style="display:contents" dir="auto"><p id="3146ddf5-5995-804c-a212-e13982dada5d" class=""><strong>Python Implementation</strong></p></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="3146ddf5-5995-807c-8ec7-f184e793138f" class="code code-wrap"><code class="language-Python" style="white-space:pre-wrap;word-break:break-all">class ListNode:
+    def __init__(self, val=0, next=None):
+        self.val = val
+        self.next = next
+
+def hasCycle(head: ListNode) -&gt; bool:
+    if not head or not head.next:
+        return False
+
+    slow = head
+    fast = head
+
+    while fast and fast.next:
+        slow = slow.next          # 1 step
+        fast = fast.next.next     # 2 steps
+
+        if slow == fast:
+            return True           # Cycle detected
+
+    return False</code></pre></div><div style="display:contents" dir="auto"><p id="3146ddf5-5995-80f5-9c1c-fe13c9beb58e" class=""><strong>Best Visuals</strong> (step-by-step movement + meeting point explanation)</p></div><div style="display:contents" dir="auto"><div id="3146ddf5-5995-80c1-91cb-cadb412b7bb4" class="column-list"><div style="display:contents" dir="auto"><div id="3146ddf5-5995-8019-bc1f-c7156dc1c327" style="width:50%" class="column"><div style="display:contents" dir="ltr"><figure id="3146ddf5-5995-8017-8bc3-e47fe66d81e5" class="image" style="text-align:left"><a href="image%209.png"><img style="width:384px" src="image%209.png"/></a></figure></div></div></div><div style="display:contents" dir="auto"><div id="3146ddf5-5995-80fa-86c9-f988838467c0" style="width:50%" class="column"><div style="display:contents" dir="ltr"><figure id="3146ddf5-5995-808c-a53e-f57d0ee8e94a" class="image" style="text-align:left"><a href="image%2010.png"><img style="width:384px" src="image%2010.png"/></a></figure></div></div></div></div></div><div style="display:contents" dir="ltr"><figure id="3146ddf5-5995-80d9-a248-dfe9a215bae9" class="image" style="text-align:center"><a href="image%2011.png"><img style="width:432px" src="image%2011.png"/></a></figure></div><div style="display:contents" dir="auto"><h3 id="3146ddf5-5995-80c4-90e6-d5e6790d6cee" class="">2. Reverse a Linked List</h3></div><div style="display:contents" dir="auto"><p id="3146ddf5-5995-8060-bc32-ec2ae1acc9c1" class="">Reverse the direction of all pointers in a singly linked list.</p></div><div style="display:contents" dir="auto"><p id="3146ddf5-5995-8079-b773-fa55b3a58783" class=""><strong>Iterative Approach</strong> (most common &amp; efficient — O(n) time, O(1) space)</p></div><div style="display:contents" dir="auto"><p id="3146ddf5-5995-8075-90bb-f3b5a23ecb9d" class=""><strong>Python Implementation</strong></p></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="3146ddf5-5995-8059-96cc-ce683e9b6bcf" class="code code-wrap"><code class="language-Python" style="white-space:pre-wrap;word-break:break-all">def reverseList(head: ListNode) -&gt; ListNode:
+    prev = None
+    curr = head
+
+    while curr:
+        next_temp = curr.next    # save next
+        curr.next = prev         # reverse pointer
+        prev = curr              # move prev forward
+        curr = next_temp         # move curr forward
+
+    return prev                  # new head</code></pre></div><div style="display:contents" dir="auto"><p id="3146ddf5-5995-80d7-b266-cc16b4c15913" class=""><strong>Best Visuals</strong> (iterative pointer movement step-by-step)</p></div><div style="display:contents" dir="ltr"><figure id="3146ddf5-5995-8037-8682-c147cd995d37" class="image" style="text-align:left"><a href="1_anQmWeErGFVptkofdzvZkw.gif"><img style="width:480px" src="1_anQmWeErGFVptkofdzvZkw.gif"/></a></figure></div><div style="display:contents" dir="auto"><div id="3146ddf5-5995-8009-8267-e20dd3d87158" class="column-list"><div style="display:contents" dir="auto"><div id="3146ddf5-5995-808b-8159-df71812f4f84" style="width:43.75%" class="column"><div style="display:contents" dir="ltr"><figure id="3146ddf5-5995-8019-832e-d6f47ae6a4c0" class="image" style="text-align:left"><a href="image%2012.png"><img style="width:384px" src="image%2012.png"/></a></figure></div></div></div><div style="display:contents" dir="auto"><div id="3146ddf5-5995-8035-b84a-d8e1031726e7" style="width:56.25%" class="column"><div style="display:contents" dir="ltr"><figure id="3146ddf5-5995-80b4-b513-c4e83946917d" class="image"><a href="image%2013.png"><img style="width:384px" src="image%2013.png"/></a></figure></div></div></div></div></div><div style="display:contents" dir="auto"><h3 id="3146ddf5-5995-806c-8e1e-e997f927f978" class="">3. Merge Two Sorted Linked Lists</h3></div><div style="display:contents" dir="auto"><p id="3146ddf5-5995-800a-9159-f5c0f41cd019" class="">Merge two sorted linked lists into one sorted linked list.</p></div><div style="display:contents" dir="auto"><p id="3146ddf5-5995-80db-ba89-c80aa7a4fe41" class=""><strong>Python Implementation</strong> (iterative with dummy node)</p></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="3146ddf5-5995-8082-a1c6-db683a7eae59" class="code code-wrap"><code class="language-Python" style="white-space:pre-wrap;word-break:break-all">def mergeTwoLists(list1: ListNode, list2: ListNode) -&gt; ListNode:
+    dummy = ListNode(0)
+    current = dummy
+
+    while list1 and list2:
+        if list1.val &lt;= list2.val:
+            current.next = list1
+            list1 = list1.next
+        else:
+            current.next = list2
+            list2 = list2.next
+        current = current.next
+
+    # Attach remaining nodes
+    current.next = list1 if list1 else list2
+
+    return dummy.next</code></pre></div><div style="display:contents" dir="auto"><p id="3146ddf5-5995-8020-90bb-c231c17161d3" class=""><strong>Best Visual</strong> (step-by-step merging process)</p></div><div style="display:contents" dir="ltr"><figure id="3146ddf5-5995-8020-8cf1-fd4aba99f567" class="image" style="text-align:left"><a href="image%2014.png"><img style="width:480px" src="image%2014.png"/></a></figure></div><div style="display:contents" dir="auto"><h3 id="3146ddf5-5995-805d-a701-ed055f6d22a9" class="">4. Find Intersection of Two Linked Lists (Y-shaped)</h3></div><div style="display:contents" dir="auto"><p id="3146ddf5-5995-8007-93e8-daa4a7c16640" class="">Find the starting node where two linked lists merge (if they intersect).</p></div><div style="display:contents" dir="auto"><p id="3146ddf5-5995-805d-ae7e-cbacea44c5de" class=""><strong>Best Method</strong> → Calculate lengths → align starting points → move together until match.</p></div><div style="display:contents" dir="auto"><p id="3146ddf5-5995-8085-b9b5-cfeb1a3ec437" class=""><strong>Python Implementation</strong></p></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="3146ddf5-5995-80ac-8a6f-f657206a9106" class="code code-wrap"><code class="language-Python" style="white-space:pre-wrap;word-break:break-all">def getIntersectionNode(headA: ListNode, headB: ListNode) -&gt; ListNode:
+    if not headA or not headB:
+        return None
+
+    # Find lengths
+    lenA = lenB = 0
+    pA, pB = headA, headB
+
+    while pA:
+        lenA += 1
+        pA = pA.next
+    while pB:
+        lenB += 1
+        pB = pB.next
+
+    # Align pointers (move longer one forward)
+    pA, pB = headA, headB
+    if lenA &gt; lenB:
+        for _ in range(lenA - lenB):
+            pA = pA.next
+    else:
+        for _ in range(lenB - lenA):
+            pB = pB.next
+
+    # Move together until intersection
+    while pA != pB:
+        pA = pA.next
+        pB = pB.next
+
+    return pA  # intersection node or None</code></pre></div><div style="display:contents" dir="auto"><p id="3146ddf5-5995-8084-8cfd-e73a2a9bbea0" class=""><strong>Best Visuals</strong> (Y-shape + intersection point explanation)<div class="indented"><div style="display:contents" dir="auto"><div id="3146ddf5-5995-805a-9d34-d37c7cb00fef" class="column-list"><div style="display:contents" dir="auto"><div id="3146ddf5-5995-8055-9027-e80f697c0ce8" style="width:50%" class="column"><div style="display:contents" dir="ltr"><figure id="3146ddf5-5995-80ba-b0b3-e077f0f80081" class="image" style="text-align:left"><a href="image%2015.png"><img style="width:336px" src="image%2015.png"/></a></figure></div></div></div><div style="display:contents" dir="auto"><div id="3146ddf5-5995-8013-bc60-cdb25f38343e" style="width:50%" class="column"><div style="display:contents" dir="ltr"><figure id="3146ddf5-5995-8029-b8fa-e2974d8e6e2e" class="image"><a href="image%2016.png"><img style="width:480px" src="image%2016.png"/></a></figure></div></div></div></div></div></div></p></div><div style="display:contents" dir="auto"><p id="3146ddf5-5995-808b-95c1-ed918c39486c" class="">
+</p></div></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>
