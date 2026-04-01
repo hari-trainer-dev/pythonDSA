@@ -1,0 +1,831 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Hash</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+/* Override strong tags inside headings to maintain consistent weight */
+h1 strong,
+h2 strong,
+h3 strong {
+	font-weight: 600;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 10px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+
+	table.collection-content {
+		width: 100%;
+		table-layout: fixed;
+	}
+
+	table.collection-content th,
+	table.collection-content td {
+		overflow-wrap: anywhere;
+	}
+
+	table.collection-content td > .user,
+	table.collection-content td > time {
+		white-space: pre-wrap;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content-wrapper {
+	overflow-x: auto;
+}
+
+@media only print {
+	.collection-content-wrapper {
+		overflow-x: visible;
+	}
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.collection-content td {
+	white-space: pre-wrap;
+	word-break: break-word;
+}
+
+.column-list {
+	display: flex;
+	gap: 46px;
+}
+
+.column {
+	min-width: 0;
+	overflow: hidden;
+}
+
+.column > *:first-child {
+	margin-top: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+	margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.callout img.notion-static-icon {
+	width: 1em;
+	height: 1em;
+}
+
+.callout p {
+	margin: 0;
+}
+
+.callout h1,
+.callout h2,
+.callout h3 {
+	margin: 0 0 0.6rem;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+blockquote.quote-large {
+	font-size: 1.25em;
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.highlight-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.highlight-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.highlight-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.highlight-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.highlight-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.highlight-default_background {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray_background {
+	background: rgba(42, 28, 0, 0.07);
+}
+.highlight-brown_background {
+	background: rgba(139, 46, 0, 0.086);
+}
+.highlight-orange_background {
+	background: rgba(224, 101, 1, 0.129);
+}
+.highlight-yellow_background {
+	background: rgba(211, 168, 0, 0.137);
+}
+.highlight-teal_background {
+	background: rgba(0, 100, 45, 0.09);
+}
+.highlight-blue_background {
+	background: rgba(0, 124, 215, 0.094);
+}
+.highlight-purple_background {
+	background: rgba(102, 0, 178, 0.078);
+}
+.highlight-pink_background {
+	background: rgba(197, 0, 93, 0.086);
+}
+.highlight-red_background {
+	background: rgba(223, 22, 0, 0.094);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.block-color-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.block-color-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.block-color-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.block-color-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.block-color-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(240, 239, 237, 1);
+}
+.block-color-brown_background {
+	background: rgba(245, 237, 233, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 235, 222, 1);
+}
+.block-color-yellow_background {
+	background: rgba(249, 243, 220, 1);
+}
+.block-color-teal_background {
+	background: rgba(232, 241, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(229, 242, 252, 1);
+}
+.block-color-purple_background {
+	background: rgba(243, 235, 249, 1);
+}
+.block-color-pink_background {
+	background: rgba(250, 233, 241, 1);
+}
+.block-color-red_background {
+	background: rgba(252, 233, 231, 1);
+}
+.select-value-color-default { background-color: rgba(42, 28, 0, 0.07); }
+.select-value-color-gray { background-color: rgba(28, 19, 1, 0.11); }
+.select-value-color-brown { background-color: rgba(127, 51, 0, 0.156); }
+.select-value-color-orange { background-color: rgba(196, 88, 0, 0.203); }
+.select-value-color-yellow { background-color: rgba(209, 156, 0, 0.282); }
+.select-value-color-green { background-color: rgba(0, 96, 38, 0.156); }
+.select-value-color-blue { background-color: rgba(0, 118, 217, 0.203); }
+.select-value-color-purple { background-color: rgba(92, 0, 163, 0.141); }
+.select-value-color-pink { background-color: rgba(183, 0, 78, 0.152); }
+.select-value-color-red { background-color: rgba(206, 24, 0, 0.164); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="3346ddf5-5995-8053-92d1-f78b9b1ef681" class="page sans"><header><h1 class="page-title" dir="auto">Hash</h1><p class="page-description" dir="auto"></p></header><div class="page-body"><div style="display:contents" dir="auto"><h3 id="3346ddf5-5995-8097-82d2-d9e34981c1d5" class="">1. Hash Table</h3></div><div style="display:contents" dir="auto"><p id="3346ddf5-5995-80d3-80df-ddbbd40f9ac2" class="">A <strong>hash table</strong> is one of the most powerful and commonly used data structures. It stores <strong>key-value pairs</strong> and gives us <strong>average O(1)</strong> time complexity for the three most important operations:</p></div><div style="display:contents" dir="auto"><ul id="3346ddf5-5995-80ed-aabe-f7fb985ddbeb" class="bulleted-list"><li style="list-style-type:disc"><strong>Insert</strong> (adding a new pair)</li></ul></div><div style="display:contents" dir="auto"><ul id="3346ddf5-5995-8077-8bab-f2ca8fd62c61" class="bulleted-list"><li style="list-style-type:disc"><strong>Search</strong> (finding a value by key)</li></ul></div><div style="display:contents" dir="auto"><ul id="3346ddf5-5995-809f-b493-cab45290f36b" class="bulleted-list"><li style="list-style-type:disc"><strong>Delete</strong> (removing a pair)</li></ul></div><div style="display:contents" dir="auto"><p id="3346ddf5-5995-8081-b4b9-c72fa6c5b002" class="">It achieves this speed by combining two things:</p></div><div style="display:contents" dir="auto"><ul id="3346ddf5-5995-8072-b3f8-e652db8b6234" class="bulleted-list"><li style="list-style-type:disc">An <strong>array</strong> (for actual storage)</li></ul></div><div style="display:contents" dir="auto"><ul id="3346ddf5-5995-8060-8d2b-d3497086b129" class="bulleted-list"><li style="list-style-type:disc">A <strong>hash function</strong> (to quickly calculate where to store or find the data)</li></ul></div><div style="display:contents" dir="ltr"><figure id="3346ddf5-5995-803a-885e-f0988fc821e4" class="image"><a href="image.png"><img style="width:480px" src="image.png"/></a></figure></div><div style="display:contents" dir="auto"><h3 id="3346ddf5-5995-800c-83bf-ccd268851024" class="">1.2. How a Hash Table Looks Internally</h3></div><div style="display:contents" dir="auto"><p id="3346ddf5-5995-802e-aae4-d4092a3a28a8" class="">Let’s imagine we create a hash table with a size of 5.</p></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="3346ddf5-5995-803f-acd4-e9a55bedddc8" class="code code-wrap"><code class="language-Plain Text" style="white-space:pre-wrap;word-break:break-all">Index:   0      1      2      3      4
+        --------------------------------
+Value:  None   None   None   None   None</code></pre></div><div style="display:contents" dir="auto"><p id="3346ddf5-5995-80aa-ac2c-eebd75812a64" class="">At the beginning, all slots are empty.</p></div><div style="display:contents" dir="auto"><h3 id="3346ddf5-5995-801e-9930-f3283d26725d" class="">3. The Hash Function</h3></div><div style="display:contents" dir="auto"><p id="3346ddf5-5995-8002-a9c5-de7cbb70066a" class="">The hash function is the heart of a hash table. Its job is to take any key and convert it into a valid array <strong>index</strong> (a number between 0 and size-1).</p></div><div style="display:contents" dir="ltr"><figure id="3346ddf5-5995-80bf-9605-f80b5e302e9a" class="image"><a href="image%201.png"><img style="width:528px" src="image%201.png"/></a></figure></div><div style="display:contents" dir="auto"><h3 id="3346ddf5-5995-80ea-a20c-ece8419829b4" class="">3.1 Hash Function for Integers</h3></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="3346ddf5-5995-80d9-8856-f6bd75c7dbaa" class="code code-wrap"><code class="language-Python" style="white-space:pre-wrap;word-break:break-all">def hash_function(key, size):
+    return key % size</code></pre></div><div style="display:contents" dir="auto"><p id="3346ddf5-5995-80fe-adb4-fca82ccc57da" class=""><strong>Examples:</strong></p></div><div style="display:contents" dir="auto"><ul id="3346ddf5-5995-8001-bca8-e471b64b071c" class="bulleted-list"><li style="list-style-type:disc">10 % 5 = <strong>0</strong></li></ul></div><div style="display:contents" dir="auto"><ul id="3346ddf5-5995-80d7-88ae-f8aae21b5da3" class="bulleted-list"><li style="list-style-type:disc">15 % 5 = <strong>0</strong> (Collision happens here)</li></ul></div><div style="display:contents" dir="auto"><ul id="3346ddf5-5995-8085-a4c7-c8530fda06b2" class="bulleted-list"><li style="list-style-type:disc">23 % 5 = <strong>3</strong></li></ul></div><div style="display:contents" dir="auto"><h3 id="3346ddf5-5995-80ab-84b6-d5af25dae3f7" class="">3.2 Hash Function for Strings</h3></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="3346ddf5-5995-80c7-90d1-d61dbc343733" class="code code-wrap"><code class="language-Python" style="white-space:pre-wrap;word-break:break-all">def string_hash(key, size):
+    hash_value = 0
+    for char in key:
+        hash_value += ord(char)
+    return hash_value % size</code></pre></div><div style="display:contents" dir="auto"><p id="3346ddf5-5995-807a-b77f-e25510dd8e58" class=""><strong>Example with &quot;app&quot;:</strong></p></div><div style="display:contents" dir="auto"><ul id="3346ddf5-5995-8095-aebd-cfd9cd2e1e55" class="bulleted-list"><li style="list-style-type:disc">a → 97</li></ul></div><div style="display:contents" dir="auto"><ul id="3346ddf5-5995-807e-8128-f219f20898a3" class="bulleted-list"><li style="list-style-type:disc">p → 112</li></ul></div><div style="display:contents" dir="auto"><ul id="3346ddf5-5995-80c3-8b4a-dc673fb35d91" class="bulleted-list"><li style="list-style-type:disc">p → 112</li></ul></div><div style="display:contents" dir="auto"><p id="3346ddf5-5995-80d4-ad0e-ec5b7aa3b732" class="">Total = 321</p></div><div style="display:contents" dir="auto"><p id="3346ddf5-5995-8070-b796-e8f0f087e3b3" class="">321 % 5 = <strong>1</strong></p></div><div style="display:contents" dir="auto"><p id="3346ddf5-5995-80f7-85aa-f4ac2b8ab9fb" class="">So &quot;app&quot; would go to index 1.</p></div><div style="display:contents" dir="auto"><h3 id="3346ddf5-5995-800c-921e-f47d178bad59" class="">4. Collision</h3></div><div style="display:contents" dir="auto"><p id="3346ddf5-5995-80e9-8636-fedd71b1e389" class="">A <strong>collision</strong> occurs when two different keys produce the same hash index.</p></div><div style="display:contents" dir="auto"><p id="3346ddf5-5995-80bb-a333-c75223f10670" class=""><strong>Example:</strong></p></div><div style="display:contents" dir="auto"><ul id="3346ddf5-5995-8020-9565-d05e231646e2" class="bulleted-list"><li style="list-style-type:disc">10 % 5 = 0</li></ul></div><div style="display:contents" dir="auto"><ul id="3346ddf5-5995-8019-8edb-fb3cf1a52e7a" class="bulleted-list"><li style="list-style-type:disc">15 % 5 = 0 ← <strong>Collision!</strong></li></ul></div><div style="display:contents" dir="auto"><p id="3346ddf5-5995-8022-9cc8-f3c8cdf30f78" class="">Even though 10 and 15 are different keys, they both want to go to index 0.</p></div><div style="display:contents" dir="ltr"><figure id="3346ddf5-5995-8008-9cb3-f86824635fcb" class="image"><a href="image%202.png"><img style="width:704px" src="image%202.png"/></a></figure></div><div style="display:contents" dir="auto"><hr id="3346ddf5-5995-80ea-88ef-ecc6856196be"/></div><div style="display:contents" dir="auto"><h3 id="3346ddf5-5995-80be-b89b-d4e1f2b79a9f" class="">5. Collision Handling Techniques</h3></div><div style="display:contents" dir="auto"><p id="3346ddf5-5995-80f2-bff8-f0328b28c653" class="">There are two popular ways to handle collisions:</p></div><div style="display:contents" dir="auto"><h3 id="3346ddf5-5995-80dc-a270-d83247c3bceb" class="">5.1 Chaining (Separate Chaining)</h3></div><div style="display:contents" dir="auto"><p id="3346ddf5-5995-8030-a1da-e4dfbc5cc07d" class="">Instead of storing a single value at each index, we store a <strong>list</strong> (also called a bucket or chain) at every index. When a collision happens, we simply append the new item to that list.</p></div><div style="display:contents" dir="ltr"><figure id="3356ddf5-5995-80a2-85de-f09d73005fac" class="image"><a href="image%203.png"><img style="width:704px" src="image%203.png"/></a></figure></div><div style="display:contents" dir="auto"><p id="3346ddf5-5995-8016-8b17-cdadc0bd7dc3" class=""><strong>Step-by-Step Visualization:</strong></p></div><div style="display:contents" dir="auto"><ol type="1" id="3346ddf5-5995-8033-9819-c522f8e37f81" class="numbered-list" start="1"><li>Insert (10, &quot;Apple&quot;)<div style="display:contents" dir="auto"><p id="3346ddf5-5995-80ac-a5d1-fb40bb23fc82" class="">→ hash(10) = 0</p></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="3346ddf5-5995-8080-84fb-e328f865fcbe" class="code code-wrap"><code class="language-Plain Text" style="white-space:pre-wrap;word-break:break-all">Index 0: [(10, &quot;Apple&quot;)]</code></pre></div></li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="3346ddf5-5995-8096-8c30-e88d40c4da74" class="numbered-list" start="2"><li>Insert (15, &quot;Banana&quot;)<div style="display:contents" dir="auto"><p id="3346ddf5-5995-801b-b91a-caec1492e566" class="">→ hash(15) = 0 (collision)</p></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="3346ddf5-5995-806f-aadf-f5a1cef86657" class="code code-wrap"><code class="language-Plain Text" style="white-space:pre-wrap;word-break:break-all">Index 0: [(10, &quot;Apple&quot;), (15, &quot;Banana&quot;)]</code></pre></div></li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="3346ddf5-5995-80ea-95e4-fedf5b30f046" class="numbered-list" start="3"><li>Insert (20, &quot;Mango&quot;)<div style="display:contents" dir="auto"><p id="3346ddf5-5995-80f5-a1f7-e364723e68c1" class="">→ hash(20) = 0 (collision)</p></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="3346ddf5-5995-808c-b5f2-c7699db7f071" class="code code-wrap"><code class="language-Plain Text" style="white-space:pre-wrap;word-break:break-all">Index 0: [(10, &quot;Apple&quot;), (15, &quot;Banana&quot;), (20, &quot;Mango&quot;)]</code></pre></div></li></ol></div><div style="display:contents" dir="ltr"><figure id="3346ddf5-5995-80ef-98cb-caa65c325041" class="image"><a href="https___dev-to-uploads.s3.amazonaws.com_uploads_articles_g7srtm5l09s6tmzy3724.webp"><img style="width:704px" src="https___dev-to-uploads.s3.amazonaws.com_uploads_articles_g7srtm5l09s6tmzy3724.webp"/></a></figure></div><div style="display:contents" dir="auto"><p id="3346ddf5-5995-808a-8cb6-d5242db8452d" class=""><strong>Python Implementation - Hash Table with Chaining:</strong></p></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="3346ddf5-5995-80a2-9309-fd109735e95c" class="code code-wrap"><code class="language-Python" style="white-space:pre-wrap;word-break:break-all">class HashTableChaining:
+    def __init__(self, size):
+        self.size = size
+        self.table = [[] for _ in range(size)]
+
+    def hash_function(self, key):
+        if isinstance(key, int):
+            return key % self.size
+
+        # Simple string hashing
+        hash_value = 0
+        for char in key:
+            hash_value += ord(char)
+        return hash_value % self.size
+
+    def insert(self, key, value):
+        index = self.hash_function(key)
+        self.table[index].append((key, value))
+
+    def search(self, key):
+        index = self.hash_function(key)
+        for k, v in self.table[index]:
+            if k == key:
+                return v
+        return &quot;Not Found&quot;
+
+    def display(self):
+        for i, bucket in enumerate(self.table):
+            print(f&quot;Index {i}: {bucket}&quot;)</code></pre></div><div style="display:contents" dir="auto"><p id="3346ddf5-5995-8022-810e-f85cd93c24a1" class=""><strong>Let’s Test It:</strong></p></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="3346ddf5-5995-8084-8fc4-e690075f8367" class="code code-wrap"><code class="language-Python" style="white-space:pre-wrap;word-break:break-all">ht = HashTableChaining(5)
+
+ht.insert(10, &quot;Apple&quot;)
+ht.insert(15, &quot;Banana&quot;)
+ht.insert(20, &quot;Mango&quot;)
+ht.insert(&quot;apple&quot;, 100)
+ht.insert(&quot;banana&quot;, 200)
+
+print(ht.search(15))      # Output: Banana
+print(ht.search(&quot;banana&quot;)) # Output: 200
+
+ht.display()</code></pre></div><div style="display:contents" dir="auto"><p id="3346ddf5-5995-8038-ae42-c7897b361102" class=""><strong>Sample Output:</strong></p></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="3346ddf5-5995-804d-add0-f7a6af78f964" class="code code-wrap"><code class="language-Plain Text" style="white-space:pre-wrap;word-break:break-all">Banana
+200
+Index 0: [(10, &#x27;Apple&#x27;), (15, &#x27;Banana&#x27;), (20, &#x27;Mango&#x27;)]
+Index 1: [(&#x27;apple&#x27;, 100)]
+Index 2: [(&#x27;banana&#x27;, 200)]
+Index 3: []
+Index 4: []</code></pre></div><div style="display:contents" dir="auto"><h3 id="3346ddf5-5995-80f3-bd37-cf51be13d889" class="">5.2 Open Addressing (Linear Probing)</h3></div><div style="display:contents" dir="auto"><p id="3346ddf5-5995-80fc-b9d2-efcd35fd28bc" class="">In this method, we don’t use lists. If the calculated index is already occupied, we keep checking the <strong>next index</strong> (linearly) until we find an empty slot.</p></div><div style="display:contents" dir="auto"><p id="3346ddf5-5995-80e9-97ef-fa7200469c12" class=""><strong>Step-by-Step Visualization:</strong></p></div><div style="display:contents" dir="auto"><ol type="1" id="3346ddf5-5995-8089-abbb-f1a54a3da9b7" class="numbered-list" start="1"><li>Insert (10, &quot;Apple&quot;)<div style="display:contents" dir="auto"><p id="3346ddf5-5995-805e-b4fe-daf1c2b77128" class="">→ hash(10) = 0</p></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="3346ddf5-5995-80ff-b24a-c98e1a5d7014" class="code code-wrap"><code class="language-Plain Text" style="white-space:pre-wrap;word-break:break-all">[ (10, &quot;Apple&quot;), None, None, None, None ]</code></pre></div></li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="3346ddf5-5995-8094-afa5-ed119759dff6" class="numbered-list" start="2"><li>Insert (15, &quot;Banana&quot;)<div style="display:contents" dir="auto"><p id="3346ddf5-5995-80a5-b423-e7d21b31d0ea" class="">→ hash(15) = 0 (occupied)</p></div><div style="display:contents" dir="auto"><p id="3346ddf5-5995-80a2-ad5e-ed37e2d563ff" class="">→ check index 1 (empty)</p></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="3346ddf5-5995-80b4-ab82-ce8139a98f61" class="code code-wrap"><code class="language-Plain Text" style="white-space:pre-wrap;word-break:break-all">[ (10, &quot;Apple&quot;), (15, &quot;Banana&quot;), None, None, None ]</code></pre></div></li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="3346ddf5-5995-80fb-9bf7-de7e5634677d" class="numbered-list" start="3"><li>Insert (20, &quot;Mango&quot;)<div style="display:contents" dir="auto"><p id="3346ddf5-5995-80c0-8c82-cc693c5cc3ea" class="">→ hash(20) = 0 (occupied)</p></div><div style="display:contents" dir="auto"><p id="3346ddf5-5995-8021-b76e-d70ebd251b21" class="">→ index 1 occupied → index 2 empty</p></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="3346ddf5-5995-8074-998b-ea9a65143f35" class="code code-wrap"><code class="language-Plain Text" style="white-space:pre-wrap;word-break:break-all">[ (10, &quot;Apple&quot;), (15, &quot;Banana&quot;), (20, &quot;Mango&quot;), None, None ]</code></pre></div></li></ol></div><div style="display:contents" dir="ltr"><figure id="3356ddf5-5995-8006-9e87-e5f8550796fe" class="image"><a href="image%204.png"><img style="width:703.9874877929688px" src="image%204.png"/></a></figure></div><div style="display:contents" dir="auto"><p id="3346ddf5-5995-80ed-97f4-f5b527201312" class=""><strong>Python Implementation - Hash Table with Linear Probing:</strong></p></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="3346ddf5-5995-800a-90ba-e89e8151d47e" class="code code-wrap"><code class="language-Python" style="white-space:pre-wrap;word-break:break-all">class HashTableOpenAddressing:
+    def __init__(self, size):
+        self.size = size
+        self.table = [None] * size
+
+    def hash_function(self, key):
+        return key % self.size
+
+    def insert(self, key, value):
+        index = self.hash_function(key)
+
+        while self.table[index] is not None:
+            index = (index + 1) % self.size   # Linear probing
+
+        self.table[index] = (key, value)
+
+    def search(self, key):
+        index = self.hash_function(key)
+        start = index
+
+        while self.table[index] is not None:
+            if self.table[index][0] == key:
+                return self.table[index][1]
+
+            index = (index + 1) % self.size
+            if index == start:
+                break
+
+        return &quot;Not Found&quot;
+
+    def display(self):
+        for i, item in enumerate(self.table):
+            print(f&quot;Index {i}: {item}&quot;)</code></pre></div><div style="display:contents" dir="auto"><p id="3346ddf5-5995-809f-b76b-e8947b7ca9f2" class=""><strong>Let’s Test It:</strong></p></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="3346ddf5-5995-804c-a753-f046d5d82829" class="code code-wrap"><code class="language-Python" style="white-space:pre-wrap;word-break:break-all">ht = HashTableOpenAddressing(5)
+
+ht.insert(10, &quot;Apple&quot;)
+ht.insert(15, &quot;Banana&quot;)
+ht.insert(20, &quot;Mango&quot;)
+
+print(ht.search(20))   # Output: Mango
+ht.display()</code></pre></div><div style="display:contents" dir="auto"><p id="3346ddf5-5995-80b8-9524-e59e12624c4a" class=""><strong>Sample Output:</strong></p></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="3346ddf5-5995-80b6-976e-cc686e9bf6a6" class="code code-wrap"><code class="language-Plain Text" style="white-space:pre-wrap;word-break:break-all">Mango
+Index 0: (10, &#x27;Apple&#x27;)
+Index 1: (15, &#x27;Banana&#x27;)
+Index 2: (20, &#x27;Mango&#x27;)
+Index 3: None
+Index 4: None</code></pre></div><div style="display:contents" dir="auto"><p id="3356ddf5-5995-8049-b0d9-cc35d3879e47" class="">Graph 📊 </p></div><div style="display:contents" dir="auto"><hr id="3346ddf5-5995-8072-a187-fd4bc4c4de27"/></div></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>
