@@ -1,0 +1,921 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Algo</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+/* Override strong tags inside headings to maintain consistent weight */
+h1 strong,
+h2 strong,
+h3 strong {
+	font-weight: 600;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 10px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+
+	table.collection-content {
+		width: 100%;
+		table-layout: fixed;
+	}
+
+	table.collection-content th,
+	table.collection-content td {
+		overflow-wrap: anywhere;
+	}
+
+	table.collection-content td > .user,
+	table.collection-content td > time {
+		white-space: pre-wrap;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content-wrapper {
+	overflow-x: auto;
+}
+
+@media only print {
+	.collection-content-wrapper {
+		overflow-x: visible;
+	}
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.collection-content td {
+	white-space: pre-wrap;
+	word-break: break-word;
+}
+
+.column-list {
+	display: flex;
+	gap: 46px;
+}
+
+.column {
+	min-width: 0;
+	overflow: hidden;
+}
+
+.column > *:first-child {
+	margin-top: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol.numbered-list.numbered-list-digits-2 {
+	padding-inline-start: 2em;
+}
+
+ol.numbered-list.numbered-list-digits-3plus {
+	padding-inline-start: 2.4em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+	margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.callout img.notion-static-icon {
+	width: 1em;
+	height: 1em;
+}
+
+.callout p {
+	margin: 0;
+}
+
+.callout h1,
+.callout h2,
+.callout h3 {
+	margin: 0 0 0.6rem;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+blockquote.quote-large {
+	font-size: 1.25em;
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.highlight-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.highlight-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.highlight-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.highlight-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.highlight-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.highlight-default_background {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray_background {
+	background: rgba(42, 28, 0, 0.07);
+}
+.highlight-brown_background {
+	background: rgba(139, 46, 0, 0.086);
+}
+.highlight-orange_background {
+	background: rgba(224, 101, 1, 0.129);
+}
+.highlight-yellow_background {
+	background: rgba(211, 168, 0, 0.137);
+}
+.highlight-teal_background {
+	background: rgba(0, 100, 45, 0.09);
+}
+.highlight-blue_background {
+	background: rgba(0, 124, 215, 0.094);
+}
+.highlight-purple_background {
+	background: rgba(102, 0, 178, 0.078);
+}
+.highlight-pink_background {
+	background: rgba(197, 0, 93, 0.086);
+}
+.highlight-red_background {
+	background: rgba(223, 22, 0, 0.094);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.block-color-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.block-color-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.block-color-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.block-color-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.block-color-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(240, 239, 237, 1);
+}
+.block-color-brown_background {
+	background: rgba(245, 237, 233, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 235, 222, 1);
+}
+.block-color-yellow_background {
+	background: rgba(249, 243, 220, 1);
+}
+.block-color-teal_background {
+	background: rgba(232, 241, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(229, 242, 252, 1);
+}
+.block-color-purple_background {
+	background: rgba(243, 235, 249, 1);
+}
+.block-color-pink_background {
+	background: rgba(250, 233, 241, 1);
+}
+.block-color-red_background {
+	background: rgba(252, 233, 231, 1);
+}
+.select-value-color-default { background-color: rgba(42, 28, 0, 0.07); }
+.select-value-color-gray { background-color: rgba(28, 19, 1, 0.11); }
+.select-value-color-brown { background-color: rgba(127, 51, 0, 0.156); }
+.select-value-color-orange { background-color: rgba(196, 88, 0, 0.203); }
+.select-value-color-yellow { background-color: rgba(209, 156, 0, 0.282); }
+.select-value-color-green { background-color: rgba(0, 96, 38, 0.156); }
+.select-value-color-blue { background-color: rgba(0, 118, 217, 0.203); }
+.select-value-color-purple { background-color: rgba(92, 0, 163, 0.141); }
+.select-value-color-pink { background-color: rgba(183, 0, 78, 0.152); }
+.select-value-color-red { background-color: rgba(206, 24, 0, 0.164); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="3386ddf5-5995-8086-a655-c74283098025" class="page sans"><header><h1 class="page-title" dir="auto">Algo</h1><p class="page-description" dir="auto"></p></header><div class="page-body"><div style="display:contents" dir="auto"><hr id="33a6ddf5-5995-80a3-94fa-f006e28ef32f"/></div><div style="display:contents" dir="auto"><h3 id="33a6ddf5-5995-8018-86b3-c6212a7377a1" class="">1. Adjacency List</h3></div><div style="display:contents" dir="auto"><p id="33a6ddf5-5995-80dc-96c4-fde4021382bd" class="">An <strong>Adjacency List</strong> is one of the most popular and memory-efficient ways to represent a graph in computer science. Instead of using a full matrix, we store each node and a list of its directly connected neighbors along with the edge weights (in case of a weighted graph).</p></div><div style="display:contents" dir="auto"><p id="33a6ddf5-5995-80fe-9db0-d7d3b4c2a8a0" class="">This representation is especially useful for sparse graphs where the number of edges is much less than the maximum possible (V²).</p></div><div style="display:contents" dir="auto"><p id="33a6ddf5-5995-8020-9621-cd21b578e520" class=""><strong>Example Graph:</strong></p></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="33a6ddf5-5995-8025-91e6-d2def737e863" class="code code-wrap"><code class="language-Plain Text" style="white-space:pre-wrap;word-break:break-all">0 → 1 (4)
+0 → 2 (1)
+1 → 3 (1)
+2 → 1 (2)
+2 → 3 (5)
+3 → 4 (3)</code></pre></div><div style="display:contents" dir="auto"><p id="33a6ddf5-5995-800e-9397-e100af53cfd0" class=""><strong>Adjacency List Representation:</strong></p></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="33a6ddf5-5995-80be-9864-fb77aa63d19c" class="code code-wrap"><code class="language-Python" style="white-space:pre-wrap;word-break:break-all">graph = {
+    0: [(1,4), (2,1)],
+    1: [(3,1)],
+    2: [(1,2), (3,5)],
+    3: [(4,3)],
+    4: []
+}</code></pre></div><div style="display:contents" dir="auto"><p id="33a6ddf5-5995-801e-8654-d89a21714fc6" class=""><strong>Format:</strong></p></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="33a6ddf5-5995-8092-98a9-f2ee8275d5ac" class="code code-wrap"><code class="language-Plain Text" style="white-space:pre-wrap;word-break:break-all">node : [(neighbor, weight), ...]</code></pre></div><div style="display:contents" dir="auto"><p id="33a6ddf5-5995-80a4-ad59-ea4bce4b69b7" class=""><strong>Example:</strong></p></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="33a6ddf5-5995-8001-b976-e9ba8f1ee437" class="code code-wrap"><code class="language-Plain Text" style="white-space:pre-wrap;word-break:break-all">0 : (1,4) (2,1)</code></pre></div><div style="display:contents" dir="auto"><hr id="33a6ddf5-5995-807f-8404-cbc2040b0cf8"/></div><div style="display:contents" dir="auto"><h3 id="33a6ddf5-5995-807e-8b12-c51be687559b" class="">2. Dijkstra’s Algorithm (Using Adjacency List)</h3></div><div style="display:contents" dir="auto"><p id="33a6ddf5-5995-80a3-a100-fcc366e89bf7" class="">Dijkstra’s Algorithm is a classic greedy algorithm used to find the <strong>shortest path</strong> from a single source vertex to all other vertices in a graph with <strong>non-negative edge weights</strong>.</p></div><div style="display:contents" dir="auto"><p id="33a6ddf5-5995-8023-8b24-c714137bb67e" class="">It works on the principle of always expanding the least-cost path first. The algorithm maintains a distance array and repeatedly selects the unvisited node with the smallest known distance, then tries to improve (relax) the distances to its neighbors.</p></div><div style="display:contents" dir="auto"><p id="33a6ddf5-5995-809c-8269-e932bde7b2f3" class="">Because it always processes nodes in increasing order of distance, once a node is marked as visited, its shortest distance is guaranteed to be finalized.</p></div><div style="display:contents" dir="auto"><p id="33a6ddf5-5995-8095-b663-c1b347177914" class=""><strong>Python Implementation:</strong></p></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="33a6ddf5-5995-802e-85ba-ec6687b411fc" class="code code-wrap"><code class="language-Python" style="white-space:pre-wrap;word-break:break-all">def dijkstra(graph, start):
+
+    INF = 999999
+    n = len(graph)
+
+    dist = [INF]*n
+    visited = [False]*n
+
+    dist[start] = 0
+
+    for _ in range(n):
+
+        # find minimum distance vertex
+        min_dist = INF
+        u = -1
+
+        for i in range(n):
+            if not visited[i] and dist[i] &lt; min_dist:
+                min_dist = dist[i]
+                u = i
+
+        visited[u] = True
+
+        # relax neighbors
+        for v,w in graph[u]:
+            if not visited[v] and dist[u] + w &lt; dist[v]:
+                dist[v] = dist[u] + w
+
+    return dist
+
+
+graph = {
+    0: [(1,4),(2,1)],
+    1: [(3,1)],
+    2: [(1,2),(3,5)],
+    3: [(4,3)],
+    4: []
+}
+
+print(dijkstra(graph, 0))</code></pre></div><div style="display:contents" dir="auto"><p id="33a6ddf5-5995-8007-8654-c9de90720f97" class=""><strong>Output:</strong></p></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="33a6ddf5-5995-803a-b5b1-c279990785c6" class="code code-wrap"><code class="language-Plain Text" style="white-space:pre-wrap;word-break:break-all">[0, 3, 1, 4, 7]</code></pre></div><div style="display:contents" dir="auto"><p id="33a6ddf5-5995-809c-b57a-ce26f092f1d9" class=""><strong>Meaning (Shortest distances from node 0):</strong></p></div><div style="display:contents" dir="auto"><ul id="33a6ddf5-5995-80d6-b615-cfd5418973f1" class="bulleted-list"><li style="list-style-type:disc">0 → 1 = 3</li></ul></div><div style="display:contents" dir="auto"><ul id="33a6ddf5-5995-807d-bf06-cf5b6c3791fc" class="bulleted-list"><li style="list-style-type:disc">0 → 2 = 1</li></ul></div><div style="display:contents" dir="auto"><ul id="33a6ddf5-5995-8099-81b3-f1192d8387b3" class="bulleted-list"><li style="list-style-type:disc">0 → 3 = 4</li></ul></div><div style="display:contents" dir="auto"><ul id="33a6ddf5-5995-8063-ad78-cbf0a80832c0" class="bulleted-list"><li style="list-style-type:disc">0 → 4 = 7</li></ul></div><div style="display:contents" dir="auto"><hr id="33a6ddf5-5995-8073-9c6d-e4658a3bdcb6"/></div><div style="display:contents" dir="auto"><h3 id="33a6ddf5-5995-8074-a9f3-c94ddb92521b" class="">3. Bellman-Ford Algorithm (Using Adjacency List)</h3></div><div style="display:contents" dir="auto"><p id="33a6ddf5-5995-800c-bc3e-dbaf9152ba57" class=""><strong>Theory:</strong></p></div><div style="display:contents" dir="auto"><p id="33a6ddf5-5995-8004-ad3c-e4cea4f59f9f" class="">The <strong>Bellman-Ford Algorithm</strong> is a dynamic programming-based algorithm that computes shortest paths from a single source vertex to all other vertices in a weighted graph.</p></div><div style="display:contents" dir="auto"><p id="33a6ddf5-5995-80f7-8297-cb7c59f42ab5" class="">Unlike Dijkstra’s, Bellman-Ford can handle graphs with <strong>negative edge weights</strong> and can also detect the presence of <strong>negative weight cycles</strong> (which would make shortest paths undefined).</p></div><div style="display:contents" dir="auto"><p id="33a6ddf5-5995-8023-9cd8-dafbc76a5169" class="">It works by relaxing all the edges |V|–1 times. The idea is that after |V|–1 iterations, the shortest path to every vertex (if it exists) will have been found, because the shortest path can have at most |V|–1 edges.</p></div><div style="display:contents" dir="auto"><p id="33a6ddf5-5995-8083-87f2-d57d2ef8d5a7" class="">
+</p></div><div style="display:contents" dir="auto"><p id="33a6ddf5-5995-8015-9cd9-f79db1faf99d" class=""><strong>Python Implementation:</strong></p></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="33a6ddf5-5995-80fc-a63b-e7687bf2112b" class="code code-wrap"><code class="language-Python" style="white-space:pre-wrap;word-break:break-all">def bellman_ford(graph, vertices, source):
+
+    INF = 999999
+    dist = [INF]*vertices
+    dist[source] = 0
+
+    # relax edges V-1 times
+    for _ in range(vertices-1):
+        for u in graph:
+            for v,w in graph[u]:
+
+                if dist[u] != INF and dist[u] + w &lt; dist[v]:
+                    dist[v] = dist[u] + w
+
+    # detect negative cycle
+    for u in graph:
+        for v,w in graph[u]:
+
+            if dist[u] != INF and dist[u] + w &lt; dist[v]:
+                print(&quot;Negative cycle detected&quot;)
+                return
+
+    return dist
+
+
+graph = {
+    0: [(1,4),(2,5)],
+    1: [(2,-3)],
+    2: [(3,4)],
+    3: []
+}
+
+print(bellman_ford(graph, 4, 0))</code></pre></div><div style="display:contents" dir="auto"><p id="33a6ddf5-5995-809c-9591-e4e3ecadfdba" class=""><strong>Output:</strong></p></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="33a6ddf5-5995-801f-9968-dda99782d041" class="code code-wrap"><code class="language-Plain Text" style="white-space:pre-wrap;word-break:break-all">[0, 4, 1, 5]</code></pre></div><div style="display:contents" dir="auto"><hr id="33a6ddf5-5995-80cb-8dcc-cbbe9cf8d515"/></div><div style="display:contents" dir="auto"><h1 id="33a6ddf5-5995-805f-b980-f5852373e48a" class="">1. Minimum Spanning Tree (MST)</h1></div><div style="display:contents" dir="auto"><h3 id="33a6ddf5-5995-8020-a5ec-c2289cbd78f8" class="">Theory</h3></div><div style="display:contents" dir="auto"><p id="33a6ddf5-5995-802f-a086-fd5b2b38477a" class="">For a <strong>connected weighted undirected graph</strong>, a <strong>Minimum Spanning Tree</strong> is a subset of edges that:</p></div><div style="display:contents" dir="auto"><ul id="33a6ddf5-5995-804c-b292-ccc5c361b333" class="bulleted-list"><li style="list-style-type:disc">Connects <strong>all vertices</strong></li></ul></div><div style="display:contents" dir="auto"><ul id="33a6ddf5-5995-80b0-a488-ee80c4af8526" class="bulleted-list"><li style="list-style-type:disc">Has <strong>no cycles</strong></li></ul></div><div style="display:contents" dir="auto"><ul id="33a6ddf5-5995-808b-aff1-ecae6897ba59" class="bulleted-list"><li style="list-style-type:disc">Has <strong>minimum total weight</strong></li></ul></div><div style="display:contents" dir="auto"><p id="33a6ddf5-5995-8060-a7cf-c3ff139c8112" class="">If graph has <strong>V vertices</strong>, MST will have <strong>V − 1 edges</strong>.</p></div><div style="display:contents" dir="auto"><h3 id="33a6ddf5-5995-80e0-8ce8-c3182674cb27" class="">Example Graph</h3></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="33a6ddf5-5995-80a9-a254-e1ef909a37bc" class="code code-wrap"><code class="language-Plain Text" style="white-space:pre-wrap;word-break:break-all">    2
+A ------ B
+| \      |
+6  3     5
+|    \   |
+C ------ D
+     4</code></pre></div><div style="display:contents" dir="ltr"><figure id="33a6ddf5-5995-80a3-b4a9-c92b11de86e4" class="image"><a href="image.png"><img style="width:576px" src="image.png"/></a></figure></div><div style="display:contents" dir="auto"><p id="33a6ddf5-5995-802a-b3bd-d9ca0b6ea67b" class="">Goal → choose edges with <strong>minimum total cost</strong> connecting all nodes.</p></div><div style="display:contents" dir="auto"><hr id="33a6ddf5-5995-808b-8760-f60179bdf405"/></div><div style="display:contents" dir="auto"><h1 id="33a6ddf5-5995-807c-b6c6-dfaa3f894f51" class="">2. Prim&#x27;s Algorithm</h1></div><div style="display:contents" dir="auto"><h3 id="33a6ddf5-5995-804a-b6f9-fcfa2a27c2ca" class="">Idea</h3></div><div style="display:contents" dir="auto"><p id="33a6ddf5-5995-80ec-9f87-d9f67f1bf3c7" class="">Prim’s algorithm <strong>grows the MST from a starting vertex</strong>.</p></div><div style="display:contents" dir="auto"><p id="33a6ddf5-5995-805b-bf27-d12f3448229b" class="">Steps:</p></div><div style="display:contents" dir="auto"><ol type="1" id="33a6ddf5-5995-800e-8485-fa155f2bbcd7" class="numbered-list" start="1"><li>Start from any node.</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="33a6ddf5-5995-8021-85d4-cbd2d4bbc840" class="numbered-list" start="2"><li>Add the <strong>smallest edge connecting visited → unvisited</strong> node.</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="33a6ddf5-5995-8051-8268-f50c3c372f41" class="numbered-list" start="3"><li>Repeat until all nodes are visited.</li></ol></div><div style="display:contents" dir="auto"><h3 id="33a6ddf5-5995-80e5-992d-c3afa244f235" class="">Time Complexity</h3></div><div style="display:contents" dir="auto"><ul id="33a6ddf5-5995-802b-a232-deb655fbe136" class="bulleted-list"><li style="list-style-type:disc">O(V²) without heap</li></ul></div><div style="display:contents" dir="auto"><ul id="33a6ddf5-5995-8007-8bb0-f5bdc8cd2413" class="bulleted-list"><li style="list-style-type:disc">O(E log V) with heap</li></ul></div><div style="display:contents" dir="ltr"><figure id="33a6ddf5-5995-8013-b8f0-eadf6302f755" class="image"><a href="1_nwkWf3vkBKShSIC-cOM7Uw.gif"><img style="width:704px" src="1_nwkWf3vkBKShSIC-cOM7Uw.gif"/></a></figure></div><div style="display:contents" dir="auto"><hr id="33a6ddf5-5995-8053-a4dc-ca45d65cfff1"/></div><div style="display:contents" dir="auto"><h2 id="33a6ddf5-5995-803e-a98e-d8019b5ac09f" class="">Prim’s Algorithm (Python)</h2></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="33a6ddf5-5995-805d-9941-cd84192b861b" class="code code-wrap"><code class="language-Python" style="white-space:pre-wrap;word-break:break-all">def prim(graph, n):
+    visited = [False] * n
+    visited[0] = True
+    edges = []
+
+    total_cost = 0
+
+    for _ in range(n - 1):
+        min_edge = (None, None, float(&#x27;inf&#x27;))
+
+        for u in range(n):
+            if visited[u]:
+                for v, w in graph[u]:
+                    if not visited[v] and w &lt; min_edge[2]:
+                        min_edge = (u, v, w)
+
+        u, v, w = min_edge
+        visited[v] = True
+        edges.append((u, v, w))
+        total_cost += w
+
+    return edges, total_cost
+
+
+graph = {
+0: [(1,2),(2,6),(3,3)],
+1: [(0,2),(3,5)],
+2: [(0,6),(3,4)],
+3: [(0,3),(1,5),(2,4)]
+}
+
+edges, cost = prim(graph,4)
+
+print(&quot;MST edges:&quot;, edges)
+print(&quot;Total cost:&quot;, cost)</code></pre></div><div style="display:contents" dir="auto"><h3 id="33a6ddf5-5995-80da-a5a2-ea7f2eaa989c" class="">Output</h3></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="33a6ddf5-5995-807a-a42a-e17773e03672" class="code code-wrap"><code class="language-Plain Text" style="white-space:pre-wrap;word-break:break-all">MST edges: [(0,1,2), (0,3,3), (3,2,4)]
+Total cost: 9</code></pre></div><div style="display:contents" dir="auto"><hr id="33a6ddf5-5995-800c-a35f-f94146d778e6"/></div><div style="display:contents" dir="auto"><h1 id="33a6ddf5-5995-808d-b0ef-e2631e0cb4d9" class="">3. Kruskal&#x27;s Algorithm</h1></div><div style="display:contents" dir="auto"><h3 id="33a6ddf5-5995-8006-9026-f522ddfca306" class="">Idea</h3></div><div style="display:contents" dir="auto"><p id="33a6ddf5-5995-804b-8e09-d59dd705e379" class="">Instead of growing from a vertex, <strong>Kruskal sorts edges by weight</strong>.</p></div><div style="display:contents" dir="auto"><p id="33a6ddf5-5995-80d1-8168-e23846340b78" class="">Steps:</p></div><div style="display:contents" dir="auto"><ol type="1" id="33a6ddf5-5995-8023-a80b-f0aa899b0b75" class="numbered-list" start="1"><li>Sort edges by <strong>smallest weight</strong></li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="33a6ddf5-5995-808d-9566-ca80731eb914" class="numbered-list" start="2"><li>Add edge if it <strong>does not form a cycle</strong></li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="33a6ddf5-5995-8066-9c79-e2ef38b0a251" class="numbered-list" start="3"><li>Stop when <strong>V−1 edges selected</strong></li></ol></div><div style="display:contents" dir="auto"><p id="33a6ddf5-5995-800e-9728-fb2f29d988d6" class="">
+</p></div><div style="display:contents" dir="ltr"><figure id="33a6ddf5-5995-80ae-b20d-d54259048f1a" class="image"><a href="image%201.png"><img style="width:703.9874877929688px" src="image%201.png"/></a></figure></div><div style="display:contents" dir="auto"><p id="33a6ddf5-5995-8000-bf88-e196e24cabde" class="">To detect cycles we use <strong>Union-Find (Disjoint Set)</strong>.</p></div><div style="display:contents" dir="auto"><hr id="33a6ddf5-5995-802a-97d1-ee1316f87f0f"/></div><div style="display:contents" dir="auto"><h1 id="33a6ddf5-5995-805c-b881-e876c510ef37" class="">4. Union-Find (Disjoint Set)</h1></div><div style="display:contents" dir="auto"><h3 id="33a6ddf5-5995-8010-800e-d458510b8fbb" class="">Purpose</h3></div><div style="display:contents" dir="auto"><p id="33a6ddf5-5995-809e-88b6-ddbd57a0421c" class="">Efficiently checks whether two nodes belong to the <strong>same component</strong>.</p></div><div style="display:contents" dir="auto"><p id="33a6ddf5-5995-8011-b4d6-ec3b658e5fe1" class="">Operations:</p></div><div style="display:contents" dir="ltr"><table id="33a6ddf5-5995-8065-88a3-d1617f267f07" class="simple-table"><thead class="simple-table-header"><div style="display:contents" dir="ltr"><tr id="33a6ddf5-5995-8033-aba1-d9c740852a32"><th id=";ylX" class="simple-table-header-color simple-table-header">Operation</th><th id="oyNC" class="simple-table-header-color simple-table-header">Meaning</th></tr></div></thead><tbody><div style="display:contents" dir="ltr"><tr id="33a6ddf5-5995-80ef-abac-f229b0761da8"><td id=";ylX" class="">Find(x)</td><td id="oyNC" class="">Find parent/root</td></tr></div><div style="display:contents" dir="ltr"><tr id="33a6ddf5-5995-8057-8d0d-fe097622919a"><td id=";ylX" class="">Union(x,y)</td><td id="oyNC" class="">Merge two sets</td></tr></div></tbody></table></div><div style="display:contents" dir="auto"><p id="33a6ddf5-5995-80af-8432-ce3160f21f04" class="">Optimizations:</p></div><div style="display:contents" dir="auto"><ul id="33a6ddf5-5995-801b-8b6d-f19fe14e4855" class="bulleted-list"><li style="list-style-type:disc"><strong>Path compression</strong></li></ul></div><div style="display:contents" dir="auto"><ul id="33a6ddf5-5995-8018-868b-db6280357bc3" class="bulleted-list"><li style="list-style-type:disc"><strong>Union by rank</strong></li></ul></div><div style="display:contents" dir="auto"><hr id="33a6ddf5-5995-8040-ab92-f31171d77666"/></div><div style="display:contents" dir="auto"><h2 id="33a6ddf5-5995-8095-a4cc-e43f99be9e24" class="">Union-Find Implementation</h2></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="33a6ddf5-5995-80c3-ad65-e82dd99acef9" class="code code-wrap"><code class="language-Python" style="white-space:pre-wrap;word-break:break-all">class DisjointSet:
+    def __init__(self, n):
+        self.parent = list(range(n))
+        self.rank = [0]*n
+
+    def find(self, x):
+        if self.parent[x] != x:
+            self.parent[x] = self.find(self.parent[x])
+        return self.parent[x]
+
+    def union(self, x, y):
+        rootX = self.find(x)
+        rootY = self.find(y)
+
+        if rootX == rootY:
+            return False
+
+        if self.rank[rootX] &lt; self.rank[rootY]:
+            self.parent[rootX] = rootY
+        elif self.rank[rootX] &gt; self.rank[rootY]:
+            self.parent[rootY] = rootX
+        else:
+            self.parent[rootY] = rootX
+            self.rank[rootX] += 1
+
+        return True</code></pre></div><div style="display:contents" dir="auto"><hr id="33a6ddf5-5995-8048-8ed8-c878e5b4df71"/></div><div style="display:contents" dir="ltr"><figure id="33a6ddf5-5995-806c-969b-fc99735a6f3a" class="image"><a href="image%202.png"><img style="width:704px" src="image%202.png"/></a></figure></div><div style="display:contents" dir="auto"><h1 id="33a6ddf5-5995-802e-9ac3-dba10c6d8c3d" class="">5. Kruskal Algorithm (Python)</h1></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="33a6ddf5-5995-8045-93c1-d67a0dfc08bc" class="code code-wrap"><code class="language-Python" style="white-space:pre-wrap;word-break:break-all">def kruskal(n, edges):
+    edges.sort(key=lambda x: x[2])
+
+    ds = DisjointSet(n)
+
+    mst = []
+    cost = 0
+
+    for u,v,w in edges:
+        if ds.union(u,v):
+            mst.append((u,v,w))
+            cost += w
+
+    return mst, cost
+
+
+edges = [
+(0,1,2),
+(0,2,6),
+(0,3,3),
+(1,3,5),
+(2,3,4)
+]
+
+mst, cost = kruskal(4, edges)
+
+print(&quot;MST:&quot;, mst)
+print(&quot;Total cost:&quot;, cost)</code></pre></div><div style="display:contents" dir="auto"><h3 id="33a6ddf5-5995-8012-b31b-e9faa67102de" class="">Output</h3></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="33a6ddf5-5995-807a-9250-ed6df8fb17c7" class="code code-wrap"><code class="language-Plain Text" style="white-space:pre-wrap;word-break:break-all">MST: [(0,1,2), (0,3,3), (2,3,4)]
+Total cost: 9</code></pre></div><div style="display:contents" dir="auto"><hr id="33a6ddf5-5995-80b1-8d7e-c6bae60c518b"/></div><div style="display:contents" dir="auto"><h1 id="33a6ddf5-5995-8046-a1f9-f4d4dcc55071" class="">6. Prim vs Kruskal</h1></div><div style="display:contents" dir="ltr"><table id="33a6ddf5-5995-805d-ba44-d4be763c54b6" class="simple-table"><thead class="simple-table-header"><div style="display:contents" dir="ltr"><tr id="33a6ddf5-5995-80a4-a8af-e944abc7b3bd"><th id="N?[U" class="simple-table-header-color simple-table-header">Feature</th><th id="GhvM" class="simple-table-header-color simple-table-header">Prim</th><th id="wEOS" class="simple-table-header-color simple-table-header">Kruskal</th></tr></div></thead><tbody><div style="display:contents" dir="ltr"><tr id="33a6ddf5-5995-80a2-afcb-f38166828b18"><td id="N?[U" class="">Approach</td><td id="GhvM" class="">Grow tree from vertex</td><td id="wEOS" class="">Pick smallest edge</td></tr></div><div style="display:contents" dir="ltr"><tr id="33a6ddf5-5995-8017-bc3e-fbc36de7047b"><td id="N?[U" class="">Structure</td><td id="GhvM" class="">Works with adjacency list</td><td id="wEOS" class="">Works with edge list</td></tr></div><div style="display:contents" dir="ltr"><tr id="33a6ddf5-5995-8075-8e4a-ce9100389112"><td id="N?[U" class="">Cycle detection</td><td id="GhvM" class="">Not needed</td><td id="wEOS" class="">Uses Union-Find</td></tr></div><div style="display:contents" dir="ltr"><tr id="33a6ddf5-5995-8074-b2ba-f68857a376fd"><td id="N?[U" class="">Best for</td><td id="GhvM" class="">Dense graphs</td><td id="wEOS" class="">Sparse graphs</td></tr></div></tbody></table></div><div style="display:contents" dir="auto"><hr id="33a6ddf5-5995-803c-9f82-fd895ce9782b"/></div></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>
