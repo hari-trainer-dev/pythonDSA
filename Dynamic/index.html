@@ -1,0 +1,840 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>DP</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+/* Override strong tags inside headings to maintain consistent weight */
+h1 strong,
+h2 strong,
+h3 strong {
+	font-weight: 600;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 10px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+
+	table.collection-content {
+		width: 100%;
+		table-layout: fixed;
+	}
+
+	table.collection-content th,
+	table.collection-content td {
+		overflow-wrap: anywhere;
+	}
+
+	table.collection-content td > .user,
+	table.collection-content td > time {
+		white-space: pre-wrap;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content-wrapper {
+	overflow-x: auto;
+}
+
+@media only print {
+	.collection-content-wrapper {
+		overflow-x: visible;
+	}
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.collection-content td {
+	white-space: pre-wrap;
+	word-break: break-word;
+}
+
+.column-list {
+	display: flex;
+	gap: 46px;
+}
+
+.column {
+	min-width: 0;
+	overflow: hidden;
+}
+
+.column > *:first-child {
+	margin-top: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol.numbered-list.numbered-list-digits-2 {
+	padding-inline-start: 2em;
+}
+
+ol.numbered-list.numbered-list-digits-3plus {
+	padding-inline-start: 2.4em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+	margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.callout img.notion-static-icon {
+	width: 1em;
+	height: 1em;
+}
+
+.callout p {
+	margin: 0;
+}
+
+.callout h1,
+.callout h2,
+.callout h3 {
+	margin: 0 0 0.6rem;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+blockquote.quote-large {
+	font-size: 1.25em;
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.highlight-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.highlight-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.highlight-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.highlight-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.highlight-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.highlight-default_background {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray_background {
+	background: rgba(42, 28, 0, 0.07);
+}
+.highlight-brown_background {
+	background: rgba(139, 46, 0, 0.086);
+}
+.highlight-orange_background {
+	background: rgba(224, 101, 1, 0.129);
+}
+.highlight-yellow_background {
+	background: rgba(211, 168, 0, 0.137);
+}
+.highlight-teal_background {
+	background: rgba(0, 100, 45, 0.09);
+}
+.highlight-blue_background {
+	background: rgba(0, 124, 215, 0.094);
+}
+.highlight-purple_background {
+	background: rgba(102, 0, 178, 0.078);
+}
+.highlight-pink_background {
+	background: rgba(197, 0, 93, 0.086);
+}
+.highlight-red_background {
+	background: rgba(223, 22, 0, 0.094);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.block-color-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.block-color-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.block-color-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.block-color-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.block-color-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(240, 239, 237, 1);
+}
+.block-color-brown_background {
+	background: rgba(245, 237, 233, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 235, 222, 1);
+}
+.block-color-yellow_background {
+	background: rgba(249, 243, 220, 1);
+}
+.block-color-teal_background {
+	background: rgba(232, 241, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(229, 242, 252, 1);
+}
+.block-color-purple_background {
+	background: rgba(243, 235, 249, 1);
+}
+.block-color-pink_background {
+	background: rgba(250, 233, 241, 1);
+}
+.block-color-red_background {
+	background: rgba(252, 233, 231, 1);
+}
+.select-value-color-default { background-color: rgba(42, 28, 0, 0.07); }
+.select-value-color-gray { background-color: rgba(28, 19, 1, 0.11); }
+.select-value-color-brown { background-color: rgba(127, 51, 0, 0.156); }
+.select-value-color-orange { background-color: rgba(196, 88, 0, 0.203); }
+.select-value-color-yellow { background-color: rgba(209, 156, 0, 0.282); }
+.select-value-color-green { background-color: rgba(0, 96, 38, 0.156); }
+.select-value-color-blue { background-color: rgba(0, 118, 217, 0.203); }
+.select-value-color-purple { background-color: rgba(92, 0, 163, 0.141); }
+.select-value-color-pink { background-color: rgba(183, 0, 78, 0.152); }
+.select-value-color-red { background-color: rgba(206, 24, 0, 0.164); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="33c6ddf5-5995-8008-b850-fbb2452c5af4" class="page sans"><header><h1 class="page-title" dir="auto">DP</h1><p class="page-description" dir="auto"></p></header><div class="page-body"><div style="display:contents" dir="auto"><hr id="33c6ddf5-5995-80ef-9f50-f3332df84196"/></div><div style="display:contents" dir="auto"><h1 id="33c6ddf5-5995-809d-bcaf-e8d96074b351" class="">1. Optimal Substructure</h1></div><div style="display:contents" dir="auto"><h2 id="33c6ddf5-5995-80ba-b25f-de2872a659ff" class="">Definition</h2></div><div style="display:contents" dir="auto"><p id="33c6ddf5-5995-80cf-be50-c1412ef82e2f" class="">A problem exhibits <strong>optimal substructure</strong> when the <strong>optimal solution of the overall problem can be constructed from optimal solutions of its subproblems</strong>.</p></div><div style="display:contents" dir="auto"><p id="33c6ddf5-5995-80e8-a012-c73087d3cb54" class="">This property is the <strong>foundation of Dynamic Programming</strong>.</p></div><div style="display:contents" dir="auto"><h3 id="33c6ddf5-5995-80d3-9ba1-e7881a6b4ce9" class="">Mathematical Idea</h3></div><div style="display:contents" dir="auto"><p id="33c6ddf5-5995-80c1-821e-e21b95f0ebcf" class="">If:</p></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="33c6ddf5-5995-8080-939b-f35d2305b75d" class="code code-wrap"><code class="language-Plain Text" style="white-space:pre-wrap;word-break:break-all">Optimal(S) = combine(Optimal(S1), Optimal(S2), ...)</code></pre></div><div style="display:contents" dir="auto"><p id="33c6ddf5-5995-80f4-95d2-fc363b9626af" class="">Then the problem has <strong>optimal substructure</strong>.</p></div><div style="display:contents" dir="auto"><hr id="33c6ddf5-5995-80ef-a1c6-f4acb2fdfe6b"/></div><div style="display:contents" dir="auto"><h2 id="33c6ddf5-5995-8074-ab01-dfe02cf2e943" class="">Example: Fibonacci</h2></div><div style="display:contents" dir="auto"><p id="33c6ddf5-5995-80c9-bb80-ea9ecd7bdcfc" class="">The recurrence relation:</p></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="33c6ddf5-5995-808f-9883-ff1e77d106e3" class="code code-wrap"><code class="language-Plain Text" style="white-space:pre-wrap;word-break:break-all">F(n) = F(n-1) + F(n-2)</code></pre></div><div style="display:contents" dir="auto"><p id="33c6ddf5-5995-8066-8a81-c61009416e7e" class="">The optimal value of <code>F(n)</code> depends on optimal values of <code>F(n-1)</code> and <code>F(n-2)</code>.</p></div><div style="display:contents" dir="auto"><h3 id="33c6ddf5-5995-80d5-9386-d83b05da5335" class="">Python Implementation</h3></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="33c6ddf5-5995-8033-b2d1-c8f5d8335664" class="code code-wrap"><code class="language-Python" style="white-space:pre-wrap;word-break:break-all">def fib(n):
+    if n &lt;= 1:
+        return n
+    return fib(n-1) + fib(n-2)
+
+print(fib(6))</code></pre></div><div style="display:contents" dir="auto"><h3 id="33c6ddf5-5995-80c7-9493-dd9b47cf28f9" class="">Time Complexity</h3></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="33c6ddf5-5995-80da-8480-fbb6fc91f9a4" class="code code-wrap"><code class="language-Plain Text" style="white-space:pre-wrap;word-break:break-all">O(2^n)</code></pre></div><div style="display:contents" dir="auto"><p id="33c6ddf5-5995-80a2-b7b6-f0c54451ea82" class="">Because the recursion tree grows exponentially.</p></div><div style="display:contents" dir="auto"><hr id="33c6ddf5-5995-80df-b07b-cebfc75eb14a"/></div><div style="display:contents" dir="auto"><h2 id="33c6ddf5-5995-8056-beff-dc259ee202d2" class="">Another Classic Example</h2></div><div style="display:contents" dir="auto"><p id="33c6ddf5-5995-806a-9a85-ebe2725a3521" class=""><strong>Shortest Path Problem</strong></p></div><div style="display:contents" dir="auto"><p id="33c6ddf5-5995-80a8-809c-f14b4be33607" class="">Algorithms like:</p></div><div style="display:contents" dir="auto"><ul id="33c6ddf5-5995-8032-9940-ce8a8ef25094" class="bulleted-list"><li style="list-style-type:disc">Dijkstra</li></ul></div><div style="display:contents" dir="auto"><ul id="33c6ddf5-5995-806b-9890-e93e9591b39e" class="bulleted-list"><li style="list-style-type:disc">Bellman-Ford</li></ul></div><div style="display:contents" dir="auto"><p id="33c6ddf5-5995-809e-ad50-fb63b5d239a2" class="">work because <strong>shortest paths contain shortest subpaths</strong>.</p></div><div style="display:contents" dir="auto"><p id="33c6ddf5-5995-800f-8045-d38700025332" class="">Example:</p></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="33c6ddf5-5995-8017-a0af-eedc502851f7" class="code code-wrap"><code class="language-Plain Text" style="white-space:pre-wrap;word-break:break-all">A → B → C → D</code></pre></div><div style="display:contents" dir="auto"><p id="33c6ddf5-5995-804e-8003-ccb02f4536b6" class="">If the shortest path from <strong>A to D</strong> goes through <strong>C</strong>, then the path <strong>A → C</strong> must also be the shortest.</p></div><div style="display:contents" dir="auto"><hr id="33c6ddf5-5995-806a-ae72-c5218639ca14"/></div><div style="display:contents" dir="auto"><h1 id="33c6ddf5-5995-80f1-aaa0-fe9a7ef81a7b" class="">2. Overlapping Subproblems</h1></div><div style="display:contents" dir="auto"><h2 id="33c6ddf5-5995-8023-be57-cfc5c42f7318" class="">Definition</h2></div><div style="display:contents" dir="auto"><p id="33c6ddf5-5995-80ce-a869-fb8eab20e605" class="">A problem has <strong>overlapping subproblems</strong> if the same subproblems are solved repeatedly during recursion.</p></div><div style="display:contents" dir="auto"><p id="33c6ddf5-5995-80bd-91c6-e1f41be61dc7" class="">Dynamic Programming avoids recomputing them.</p></div><div style="display:contents" dir="auto"><hr id="33c6ddf5-5995-801f-9757-fbfa38efc1f4"/></div><div style="display:contents" dir="auto"><h2 id="33c6ddf5-5995-8061-b5e5-c1f453ab5885" class="">Example: Fibonacci Recursion Tree</h2></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="33c6ddf5-5995-801a-9b51-d43e149ccc0e" class="code code-wrap"><code class="language-Plain Text" style="white-space:pre-wrap;word-break:break-all">fib(5)
+ ├── fib(4)
+ │    ├── fib(3)
+ │    │    ├── fib(2)
+ │    │    └── fib(1)
+ │    └── fib(2)
+ └── fib(3)</code></pre></div><div style="display:contents" dir="auto"><p id="33c6ddf5-5995-8034-a3e8-d8e329b1a7bf" class="">Here:</p></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="33c6ddf5-5995-80bf-a117-d57766fcd32d" class="code code-wrap"><code class="language-Plain Text" style="white-space:pre-wrap;word-break:break-all">fib(3)
+fib(2)</code></pre></div><div style="display:contents" dir="auto"><p id="33c6ddf5-5995-800f-ac4e-dae3b9513084" class="">are solved <strong>multiple times</strong>.</p></div><div style="display:contents" dir="auto"><hr id="33c6ddf5-5995-80d0-b9fd-f0672a1c817e"/></div><div style="display:contents" dir="auto"><h2 id="33c6ddf5-5995-8070-9674-c4c1a4953bf1" class="">Complexity Without DP</h2></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="33c6ddf5-5995-80df-8d30-c31b659294e0" class="code code-wrap"><code class="language-Plain Text" style="white-space:pre-wrap;word-break:break-all">Time = O(2^n)</code></pre></div><div style="display:contents" dir="auto"><hr id="33c6ddf5-5995-806a-a233-fb348db2abce"/></div><div style="display:contents" dir="auto"><h1 id="33c6ddf5-5995-80b0-b34a-d0ce056ae5b8" class="">3. Memoization (Top-Down Dynamic Programming)</h1></div><div style="display:contents" dir="auto"><h2 id="33c6ddf5-5995-80b0-8b56-e17498a5aff5" class="">Definition</h2></div><div style="display:contents" dir="auto"><p id="33c6ddf5-5995-8068-b6cc-d966461fd313" class="">Memoization is a <strong>top-down dynamic programming technique</strong> where recursion is used and results of solved subproblems are <strong>stored in memory</strong>.</p></div><div style="display:contents" dir="auto"><p id="33c6ddf5-5995-80b3-b34a-da1418eee807" class="">When the same subproblem appears again, the stored value is reused.</p></div><div style="display:contents" dir="auto"><hr id="33c6ddf5-5995-80ca-a356-f2799caeb7dd"/></div><div style="display:contents" dir="auto"><h2 id="33c6ddf5-5995-80b7-88f1-e899e45bdd8f" class="">Algorithm Steps</h2></div><div style="display:contents" dir="auto"><ol type="1" id="33c6ddf5-5995-8013-a4c8-ccfd1c432147" class="numbered-list" start="1"><li>Start with the main problem.</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="33c6ddf5-5995-80db-b971-dc1144159812" class="numbered-list" start="2"><li>Recursively divide into subproblems.</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="33c6ddf5-5995-803c-9095-feb091af6d9c" class="numbered-list" start="3"><li>Store results in a <strong>cache (dictionary/array)</strong>.</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="33c6ddf5-5995-8038-95c7-ed58da1aa4f2" class="numbered-list" start="4"><li>If the subproblem is already solved, return stored result.</li></ol></div><div style="display:contents" dir="auto"><hr id="33c6ddf5-5995-80ce-a3c2-c6c7357e9554"/></div><div style="display:contents" dir="auto"><h2 id="33c6ddf5-5995-806c-82e5-d67340da4243" class="">Python Implementation</h2></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="33c6ddf5-5995-8024-a71f-c2a39f279821" class="code code-wrap"><code class="language-Python" style="white-space:pre-wrap;word-break:break-all">memo = {}
+
+def fib(n):
+
+    if n in memo:
+        return memo[n]
+
+    if n &lt;= 1:
+        return n
+
+    memo[n] = fib(n-1) + fib(n-2)
+
+    return memo[n]
+
+
+print(fib(10))</code></pre></div><div style="display:contents" dir="auto"><hr id="33c6ddf5-5995-80f7-b432-e94eed575097"/></div><div style="display:contents" dir="auto"><h2 id="33c6ddf5-5995-8055-a895-ee975b4675c3" class="">Complexity</h2></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="33c6ddf5-5995-8081-8c62-e59e1b878da4" class="code code-wrap"><code class="language-Plain Text" style="white-space:pre-wrap;word-break:break-all">Time Complexity: O(n)
+Space Complexity: O(n)</code></pre></div><div style="display:contents" dir="auto"><p id="33c6ddf5-5995-809a-8429-d6cae00bacb1" class="">Because each subproblem is solved <strong>only once</strong>.</p></div><div style="display:contents" dir="auto"><hr id="33c6ddf5-5995-8046-aa52-e1190a2c5e02"/></div><div style="display:contents" dir="auto"><h1 id="33c6ddf5-5995-8023-bc92-efe0d16313c3" class="">4. Tabulation (Bottom-Up Dynamic Programming)</h1></div><div style="display:contents" dir="auto"><h2 id="33c6ddf5-5995-8088-bc91-c91841f51c50" class="">Definition</h2></div><div style="display:contents" dir="auto"><p id="33c6ddf5-5995-80dc-94ea-ddb1e63e9849" class="">Tabulation is a <strong>bottom-up DP approach</strong> where we solve the smallest subproblems first and build up to the final solution.</p></div><div style="display:contents" dir="auto"><p id="33c6ddf5-5995-800d-938c-fd7fd779f8ec" class="">Instead of recursion, we use <strong>iteration and a table (array)</strong>.</p></div><div style="display:contents" dir="auto"><hr id="33c6ddf5-5995-8017-a856-e866d861bfb9"/></div><div style="display:contents" dir="auto"><h2 id="33c6ddf5-5995-80a5-bbcf-dadefa9ab0f6" class="">Algorithm Steps</h2></div><div style="display:contents" dir="auto"><ol type="1" id="33c6ddf5-5995-80f0-b7f0-ee9bde88fe3d" class="numbered-list" start="1"><li>Define DP table</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="33c6ddf5-5995-80ad-983c-ecdeba8cf1f1" class="numbered-list" start="2"><li>Initialize base cases</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="33c6ddf5-5995-80d3-b7b2-d34a6b1e3c6c" class="numbered-list" start="3"><li>Fill table iteratively</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="33c6ddf5-5995-805a-8d45-e6e18e55c04c" class="numbered-list" start="4"><li>Return final result</li></ol></div><div style="display:contents" dir="auto"><hr id="33c6ddf5-5995-8069-bebd-f2fd7fe34b05"/></div><div style="display:contents" dir="auto"><h2 id="33c6ddf5-5995-8068-bc1f-da009e41115b" class="">Python Example</h2></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="33c6ddf5-5995-8081-9ef3-d74eaa81752b" class="code code-wrap"><code class="language-Python" style="white-space:pre-wrap;word-break:break-all">def fib(n):
+
+    dp = [0] * (n + 1)
+
+    if n &gt; 0:
+        dp[1] = 1
+
+    for i in range(2, n + 1):
+        dp[i] = dp[i-1] + dp[i-2]
+
+    return dp[n]
+
+
+print(fib(10))</code></pre></div><div style="display:contents" dir="auto"><hr id="33c6ddf5-5995-80be-a4e0-df5ecc87f258"/></div><div style="display:contents" dir="auto"><h2 id="33c6ddf5-5995-8065-8da6-e6a41cd67fc2" class="">DP Table Example</h2></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="33c6ddf5-5995-80cc-8e7b-d9ebd5a4051d" class="code code-wrap"><code class="language-Plain Text" style="white-space:pre-wrap;word-break:break-all">Index: 0 1 2 3 4 5
+Value: 0 1 1 2 3 5</code></pre></div><div style="display:contents" dir="auto"><hr id="33c6ddf5-5995-80d3-9d22-ef60581d4249"/></div><div style="display:contents" dir="auto"><h2 id="33c6ddf5-5995-80eb-a68a-e44b33a70aba" class="">Complexity</h2></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="33c6ddf5-5995-8073-9b3a-f14371896152" class="code code-wrap"><code class="language-Plain Text" style="white-space:pre-wrap;word-break:break-all">Time: O(n)
+Space: O(n)</code></pre></div><div style="display:contents" dir="auto"><hr id="33c6ddf5-5995-8022-bcd7-ff9a04a5b9c5"/></div><div style="display:contents" dir="auto"><h1 id="33c6ddf5-5995-800c-94bf-d26c561dd065" class="">5. Memoization vs Tabulation</h1></div><div style="display:contents" dir="ltr"><table id="33c6ddf5-5995-800b-ad62-dda6e04e3960" class="simple-table"><thead class="simple-table-header"><div style="display:contents" dir="ltr"><tr id="33c6ddf5-5995-804e-aeb9-dabfaafdfdb8"><th id=":WGw" class="simple-table-header-color simple-table-header">Feature</th><th id="y^?q" class="simple-table-header-color simple-table-header">Memoization</th><th id="Iiix" class="simple-table-header-color simple-table-header">Tabulation</th></tr></div></thead><tbody><div style="display:contents" dir="ltr"><tr id="33c6ddf5-5995-8018-a3e8-c39132e564d1"><td id=":WGw" class="">Approach</td><td id="y^?q" class="">Top-Down</td><td id="Iiix" class="">Bottom-Up</td></tr></div><div style="display:contents" dir="ltr"><tr id="33c6ddf5-5995-809c-abd5-f9b246597bfd"><td id=":WGw" class="">Recursion</td><td id="y^?q" class="">Yes</td><td id="Iiix" class="">No</td></tr></div><div style="display:contents" dir="ltr"><tr id="33c6ddf5-5995-8095-8023-d1b69d1c6985"><td id=":WGw" class="">Memory usage</td><td id="y^?q" class="">Dynamic</td><td id="Iiix" class="">Predefined</td></tr></div><div style="display:contents" dir="ltr"><tr id="33c6ddf5-5995-8026-84dc-c7a1ba56519f"><td id=":WGw" class="">Stack overhead</td><td id="y^?q" class="">Yes</td><td id="Iiix" class="">No</td></tr></div><div style="display:contents" dir="ltr"><tr id="33c6ddf5-5995-807d-9187-deabf059df3e"><td id=":WGw" class="">Implementation</td><td id="y^?q" class="">Easier</td><td id="Iiix" class="">Slightly longer</td></tr></div></tbody></table></div><div style="display:contents" dir="auto"><hr id="33c6ddf5-5995-8044-9049-fb4a3e75aadb"/></div><div style="display:contents" dir="auto"><h1 id="33c6ddf5-5995-8013-a80e-e22ac11ec864" class="">6. Longest Increasing Subsequence (LIS)</h1></div><div style="display:contents" dir="auto"><h2 id="33c6ddf5-5995-800b-b31d-deaf1408d9db" class="">Problem Definition</h2></div><div style="display:contents" dir="auto"><p id="33c6ddf5-5995-8070-afaa-cca13541b0cb" class="">Given an array of integers:</p></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="33c6ddf5-5995-8026-9658-c6f6f1898d37" class="code code-wrap"><code class="language-Plain Text" style="white-space:pre-wrap;word-break:break-all">arr = [10,22,9,33,21,50,41,60]</code></pre></div><div style="display:contents" dir="auto"><p id="33c6ddf5-5995-8075-9428-cd2e3dc23a11" class="">Find the <strong>length of the longest subsequence where elements are strictly increasing</strong>.</p></div><div style="display:contents" dir="auto"><p id="33c6ddf5-5995-8086-b753-efa4c63241f1" class="">Subsequence example:</p></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="33c6ddf5-5995-80ce-a885-cebe51d0a0e6" class="code code-wrap"><code class="language-Plain Text" style="white-space:pre-wrap;word-break:break-all">10 → 22 → 33 → 50 → 60</code></pre></div><div style="display:contents" dir="auto"><p id="33c6ddf5-5995-8053-9377-de7bcd00f696" class="">Length:</p></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="33c6ddf5-5995-80ae-9d27-ebdefc7af93b" class="code code-wrap"><code class="language-Plain Text" style="white-space:pre-wrap;word-break:break-all">5</code></pre></div><div style="display:contents" dir="auto"><hr id="33c6ddf5-5995-80dc-8a79-dfee69b79564"/></div><div style="display:contents" dir="auto"><h1 id="33c6ddf5-5995-80b6-8afd-dad0ede06839" class="">7. LIS Using Dynamic Programming</h1></div><div style="display:contents" dir="auto"><h2 id="33c6ddf5-5995-80ec-84c0-c28f08197ddc" class="">Idea</h2></div><div style="display:contents" dir="auto"><p id="33c6ddf5-5995-8054-bc00-db92042f99a2" class="">For each element <code>i</code>:</p></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="33c6ddf5-5995-80ad-8241-cf1429b6e69c" class="code code-wrap"><code class="language-Plain Text" style="white-space:pre-wrap;word-break:break-all">LIS(i) = 1 + max(LIS(j))</code></pre></div><div style="display:contents" dir="auto"><p id="33c6ddf5-5995-8071-8fef-d3bdfedeb41d" class="">Where</p></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="33c6ddf5-5995-808b-b46e-c53da0e8472c" class="code code-wrap"><code class="language-Plain Text" style="white-space:pre-wrap;word-break:break-all">j &lt; i
+arr[j] &lt; arr[i]</code></pre></div><div style="display:contents" dir="auto"><hr id="33c6ddf5-5995-8005-b215-e5b1b59d2092"/></div><div style="display:contents" dir="auto"><h2 id="33c6ddf5-5995-80ae-8774-f6cf19bbc7b6" class="">Python Implementation</h2></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="33c6ddf5-5995-809f-a321-e74458cbc7e3" class="code code-wrap"><code class="language-Python" style="white-space:pre-wrap;word-break:break-all">def lis(arr):
+
+    n = len(arr)
+
+    dp = [1] * n
+
+    for i in range(1, n):
+        for j in range(i):
+
+            if arr[i] &gt; arr[j]:
+                dp[i] = max(dp[i], dp[j] + 1)
+
+    return max(dp)
+
+
+arr = [10,22,9,33,21,50,41,60]
+
+print(lis(arr))</code></pre></div><div style="display:contents" dir="auto"><hr id="33c6ddf5-5995-8042-b1c0-d97e1382dc4e"/></div><div style="display:contents" dir="auto"><h2 id="33c6ddf5-5995-80ff-9d12-da5a5cdc7471" class="">Step Example</h2></div><div style="display:contents" dir="auto"><p id="33c6ddf5-5995-8010-add9-e8d1e209780b" class="">Array</p></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="33c6ddf5-5995-80f4-82a9-c530c90ad850" class="code code-wrap"><code class="language-Plain Text" style="white-space:pre-wrap;word-break:break-all">[10,22,9,33]</code></pre></div><div style="display:contents" dir="auto"><p id="33c6ddf5-5995-8011-a5c7-f5e3d20b56c4" class="">DP Table</p></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="33c6ddf5-5995-8011-a23a-c7b8ee80ba6e" class="code code-wrap"><code class="language-Plain Text" style="white-space:pre-wrap;word-break:break-all">Index : 0 1 2 3
+Value :10 22 9 33
+DP    : 1 2 1 3</code></pre></div><div style="display:contents" dir="auto"><p id="33c6ddf5-5995-8096-bf10-f3f8075abd80" class="">Explanation</p></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="33c6ddf5-5995-80eb-b9e5-c393af54b588" class="code code-wrap"><code class="language-Plain Text" style="white-space:pre-wrap;word-break:break-all">10 → length 1
+22 → 10 &lt; 22 → length 2
+9 → reset → 1
+33 → 10,22 → length 3</code></pre></div><div style="display:contents" dir="auto"><hr id="33c6ddf5-5995-8030-8f21-dfc1315c183b"/></div><div style="display:contents" dir="auto"><h2 id="33c6ddf5-5995-803a-b52a-c9ee20cb85a6" class="">Complexity</h2></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="33c6ddf5-5995-8056-8849-e282f534f56e" class="code code-wrap"><code class="language-Plain Text" style="white-space:pre-wrap;word-break:break-all">Time Complexity: O(n²)
+Space Complexity: O(n)</code></pre></div><div style="display:contents" dir="auto"><hr id="33c6ddf5-5995-808a-84fa-cb0ee3bdfd49"/></div><div style="display:contents" dir="auto"><h1 id="33c6ddf5-5995-809d-bca6-d94b73af8e0e" class="">8. Optimized LIS (Advanced DSA)</h1></div><div style="display:contents" dir="auto"><p id="33c6ddf5-5995-802a-8151-c7202e639bf0" class="">Using <strong>Binary Search + Greedy</strong></p></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="33c6ddf5-5995-8091-bfa9-d38899dd73fb" class="code code-wrap"><code class="language-Python" style="white-space:pre-wrap;word-break:break-all">def lis(arr):
+
+    tails = []
+
+    for num in arr:
+
+        left = 0
+        right = len(tails)
+
+        # binary search
+        while left &lt; right:
+            mid = (left + right) // 2
+
+            if tails[mid] &lt; num:
+                left = mid + 1
+            else:
+                right = mid
+
+        # update tails
+        if left == len(tails):
+            tails.append(num)
+        else:
+            tails[left] = num
+
+    return len(tails)
+
+
+arr = [10,22,9,33,21,50,41,60]
+
+print(lis(arr))</code></pre></div><div style="display:contents" dir="auto"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="33c6ddf5-5995-8020-a73b-de3d5f608f37" class="code code-wrap"><code class="language-Plain Text" style="white-space:pre-wrap;word-break:break-all">Time Complexity: O(n log n)</code></pre></div><div style="display:contents" dir="auto"><p id="33c6ddf5-5995-8079-b421-d52622ab1b31" class="">
+</p></div><div style="display:contents" dir="auto"><hr id="33c6ddf5-5995-8010-b112-f37415f9a1b8"/></div></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>
